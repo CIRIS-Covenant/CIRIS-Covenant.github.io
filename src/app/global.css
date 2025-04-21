@@ -1,3 +1,33 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+
+:root {
+  --fd-primary: #1f66f4;
+  --fd-primary-foreground: #ffffff;
+  --fd-secondary: #f9c74f;
+  --fd-secondary-foreground: #000000;
+  --fd-accent: #f3722c;
+  --fd-accent-foreground: #ffffff;
+  --fd-destructive: #f94144;
+  --fd-destructive-foreground: #ffffff;
+  --fd-muted: #f8e9a1;
+  --fd-muted-foreground: #000000;
+}
+
+@layer utilities {
+  .dark .text-fd-primary, .dark .data-\[active\=true\]\:text-fd-primary[data-active=true] {
+    color: #89b5fa;
+  }
+  .text-fd-primary, .data-\[active\=true\]\:text-fd-primary[data-active=true] {
+    color: #1f66f4;
+  }
+}
+@layer base {
+  h1 { font-size: 25px !important;}
+  h2 { font-size: 20px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
+  h3 { font-size: 18px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
+  h4 { font-size: 16px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
+  h5 { font-size: 14px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
+  h6 { font-size: 12px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
+}
