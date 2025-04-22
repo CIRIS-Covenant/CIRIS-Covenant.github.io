@@ -1,5 +1,7 @@
 import os
 import glob
+import subprocess
+import shutil # To check if pandoc exists
 
 # Changed default output file
 def assemble_covenant(output_file="public/ciris_covenant.txt", base_input_dir="content/sections"):
@@ -23,10 +25,14 @@ def assemble_covenant(output_file="public/ciris_covenant.txt", base_input_dir="c
 
     # Sections not explicitly included based on user request:
     # - formulas
+    # - formulas
     # - resources-credits
     # - how-to-help
 
-    print(f"Starting assembly process into '{output_file}'...")
+    txt_output_file = output_file # Keep original name for the text file
+    pdf_output_file = os.path.splitext(txt_output_file)[0] + ".pdf" # Derive PDF name
+
+    print(f"Starting assembly process into '{txt_output_file}'...")
     output_buffer = []
 
     for file_path_pattern in assembly_order:
@@ -63,18 +69,47 @@ def assemble_covenant(output_file="public/ciris_covenant.txt", base_input_dir="c
             else:
                 print(f"Warning: File '{file_path}' not found. Skipping.")
 
-    # Write the assembled content to the output file
+    # Write the assembled content to the text output file
+    txt_success = False
     try:
-        print(f"Writing assembled content to '{output_file}'...")
-        with open(output_file, 'w', encoding='utf-8') as outfile:
+        print(f"Writing assembled content to '{txt_output_file}'...")
+        with open(txt_output_file, 'w', encoding='utf-8') as outfile:
             outfile.writelines(output_buffer)
-        print("Assembly process finished.")
+        print(f"Successfully created '{txt_output_file}'.")
+        txt_success = True
     except IOError as e:
-        print(f"Error writing output file '{output_file}': {e}")
+        print(f"Error writing output file '{txt_output_file}': {e}")
     except Exception as e:
-        print(f"An unexpected error occurred while writing '{output_file}': {e}")
+        print(f"An unexpected error occurred while writing '{txt_output_file}': {e}")
+
+    # Attempt to generate PDF using pandoc if text file was created and pandoc is available
+    if txt_success and shutil.which("pandoc"):
+        print(f"Attempting to generate PDF '{pdf_output_file}' using pandoc...")
+        try:
+            # Use pandoc to convert the generated text file to PDF
+            # Treat input as markdown (-f markdown) for better formatting
+            # Use xelatex engine for better Unicode support
+            result = subprocess.run(
+                ["pandoc", txt_output_file, "-f", "markdown", "--pdf-engine=xelatex", "-o", pdf_output_file],
+                check=True, capture_output=True, text=True
+            )
+            print(f"Successfully created '{pdf_output_file}'.")
+        except FileNotFoundError:
+             print("Error: 'pandoc' command not found. Please install pandoc to generate PDFs.")
+        except subprocess.CalledProcessError as e:
+            print(f"Error running pandoc to generate PDF:")
+            print(f"Command: {' '.join(e.cmd)}")
+            print(f"Return code: {e.returncode}")
+            print(f"Stderr: {e.stderr}")
+        except Exception as e:
+            print(f"An unexpected error occurred during PDF generation: {e}")
+    elif txt_success:
+         print("Skipping PDF generation: 'pandoc' command not found. Please install pandoc.")
+
+
+    print("Assembly process finished.")
 
 
 if __name__ == "__main__":
-    # Changed default output file path here as well
+    # Script now generates both .txt and .pdf based on this input
     assemble_covenant(output_file="public/ciris_covenant.txt")

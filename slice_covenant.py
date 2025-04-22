@@ -35,20 +35,23 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
                 # Assuming the paths in the delimiter are relative to the project root
                 output_path = os.path.normpath(new_file_path_relative) # Use the path from the delimiter directly
 
-                # Ensure the target directory exists (it should based on previous steps)
+                # Ensure the target directory exists
                 output_dir = os.path.dirname(output_path)
-                if output_dir and not os.path.exists(output_dir):
-                     print(f"Warning: Directory '{output_dir}' does not exist. Skipping file '{output_path}'.")
-                     # Or optionally create it: os.makedirs(output_dir, exist_ok=True)
-                else:
-                    try:
-                        print(f"Writing content to: {output_path}")
-                        with open(output_path, 'w', encoding='utf-8') as outfile:
-                            outfile.writelines(content_buffer)
-                    except IOError as e:
-                        print(f"Error writing to file '{output_path}': {e}")
-                    except Exception as e:
-                         print(f"An unexpected error occurred while writing to '{output_path}': {e}")
+                if output_dir: # Check if there is a directory part
+                    os.makedirs(output_dir, exist_ok=True) # Create directories if they don't exist
+
+                # Now write the file
+                try:
+                    print(f"Writing content to: {output_path}")
+                    # Corrected indentation for 'with open'
+                    with open(output_path, 'w', encoding='utf-8') as outfile:
+                        outfile.writelines(content_buffer)
+                # Corrected indentation for 'except'
+                except IOError as e:
+                    print(f"Error writing to file '{output_path}': {e}")
+                # Corrected indentation for 'except'
+                except Exception as e:
+                    print(f"An unexpected error occurred while writing to '{output_path}': {e}")
 
 
             # Start new buffer for the new file path found in *this* delimiter
@@ -61,20 +64,26 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
             content_buffer.append(line)
 
     # Write the last buffer after the loop finishes
+    # Corrected indentation for this entire block
     if current_file_path and content_buffer:
-         output_path = os.path.normpath(current_file_path)
-         output_dir = os.path.dirname(output_path)
-         if output_dir and not os.path.exists(output_dir):
-             print(f"Warning: Directory '{output_dir}' does not exist. Skipping file '{output_path}'.")
-         else:
-            try:
-                print(f"Writing final content to: {output_path}")
-                with open(output_path, 'w', encoding='utf-8') as outfile:
-                    outfile.writelines(content_buffer)
-            except IOError as e:
-                print(f"Error writing final content to file '{output_path}': {e}")
-            except Exception as e:
-                 print(f"An unexpected error occurred while writing final content to '{output_path}': {e}")
+        output_path = os.path.normpath(current_file_path)
+        # Ensure the target directory exists for the final write
+        output_dir = os.path.dirname(output_path)
+        if output_dir: # Check if there is a directory part
+            os.makedirs(output_dir, exist_ok=True) # Create directories if they don't exist
+
+        # Now write the final file
+        try:
+            print(f"Writing final content to: {output_path}")
+             # Corrected indentation for 'with open'
+            with open(output_path, 'w', encoding='utf-8') as outfile:
+                outfile.writelines(content_buffer)
+        # Corrected indentation for 'except'
+        except IOError as e:
+            print(f"Error writing final content to file '{output_path}': {e}")
+        # Corrected indentation for 'except'
+        except Exception as e:
+            print(f"An unexpected error occurred while writing final content to '{output_path}': {e}")
 
 
     print("Slicing process finished.")
