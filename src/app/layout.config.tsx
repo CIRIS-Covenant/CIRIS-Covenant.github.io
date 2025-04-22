@@ -25,8 +25,8 @@ export const baseOptions: BaseLayoutProps = {
   },
   // links: [
   //   {
-  //     text: 'Books',
-  //     url: '/books',
+  //     text: 'Sections',
+  //     url: '/sections',
   //     active: 'nested-url',
   //   },
   // ],
