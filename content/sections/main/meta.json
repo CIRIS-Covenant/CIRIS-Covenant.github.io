@@ -1,6 +1,6 @@
 {
   "title": "Main",
-  "description": "Main book of the CIRIS Covenant",
+  "description": "Main section of the CIRIS Covenant",
   "root": true,
-  "pages": ["---The CIRIS Covenant---", "(integrations)", "index", "foreword", "---Books---", "..."]
+  "pages": ["---The CIRIS Covenant---", "(integrations)", "index", "foreword", "---Sections---", "..."]
 }
