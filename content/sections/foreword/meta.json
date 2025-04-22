@@ -1,0 +1,6 @@
+{
+  "title": "Foreword",
+  "description": "Foreword section of the CIRIS Covenant",
+  "root": true,
+  "pages": ["foreword", "section0", "..."]
+}

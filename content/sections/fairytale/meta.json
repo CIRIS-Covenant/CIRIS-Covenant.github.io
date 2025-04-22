@@ -1,6 +1,0 @@
-{
-  "title": "Fairytale",
-  "description": "Fairytale section of the CIRIS Covenant",
-  "root": true,
-  "pages": ["foreword", "..."]
-}
