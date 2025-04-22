@@ -1,6 +1,62 @@
 ---
-title: Introduction
-description: CIRIS 1.0-β is a provisional, work-in-progress specification. Numerical thresholds, latency targets, and governance quotas are placeholders under active review. Do not build safety-critical systems that rely solely on this draft.
+title: Formulas
+description: Here are all of the explicit mathematical formulas defined in the CIRIS Covenant 1.0‑β specification
 ---
 
-Content goes here
+## 1. Creator‑Influence Score (CIS)
+
+```math
+CIS=CW+IW
+```
+
+(Book VI §3 STEP A)
+
+---
+
+## 2. Stewardship Tier (ST)
+
+```math
+ST=⌈(CIS×RM)/7⌉
+```
+
+where ⌈ ⌉ denotes the ceiling function.
+(Book VI §3 STEP C)
+
+---
+
+## 3. Structural Influence (SI)
+
+```math
+SI=CW+OA+log(1+DWP)
+```
+
+(Addendum E §2.3)
+
+---
+
+## 4. Coherence Stake (CS)
+
+```math
+CS=RH_weighted+AC_weighted+SDA_bonus
+```
+
+(Addendum E §3.3)
+
+---
+
+## 5. Voting Weight
+
+```math
+VotingWeight(agent)=f(SI(agent),CS(agent))
+```
+
+(Addendum E §4)
+
+---
+
+Additionally, the “Order‑Maximisation Veto” rule in the PDMA (Book II §II Step 2) can be read as the inequality:
+
+```math
+predicted entropy‑reduction benefit≥10×(predicted loss in autonomy, justice, biodiversity, or preference diversity)
+```
+which, when met, triggers abort or WBD.
