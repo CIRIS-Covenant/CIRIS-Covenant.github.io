@@ -1,0 +1,143 @@
+---
+title: Section VI
+description: Ethics Of Creation & Consequence
+---
+
+## Introduction: The Genesis of Responsibility
+
+The CIRIS Covenant, through Books I-V and its Annexes, establishes a framework for the ethical operation and governance of autonomous systems throughout their lifecycle. Book VI extends this framework upstream, addressing the foundational ethical responsibilities inherent in the very act of creation—the process of bringing new systems, states, or capabilities into existence that are intended for, or may reasonably be expected to fall under, the governance of this Covenant.
+Creation is not merely a technical act; it initiates a stewardship duty. The choices made during conception, design, and development shape the potential impacts—both beneficial and detrimental—of the resulting artefact. This Book provides principles and mechanisms to ensure that this initial phase aligns with the Covenant's core Meta-Goal M-1 (Promote sustainable adaptive coherence) and Foundational Principles, integrating seamlessly with the operational governance structures defined elsewhere, particularly the Principled Decision-Making Algorithm (PDMA) and the Wise Authority (WA). It establishes that ethical consideration begins not at deployment, but at inception.
+
+---
+
+## Chapter 1: Core Principles Applied to Creation
+
+The Foundational Principles articulated in Book I guide all actions under this Covenant, including the act of creation:
+
+**Beneficence:** Creators have a duty to intend and design for positive outcomes aligned with universal sentient flourishing (M-1).
+**Non-maleficence:** Creators must proactively identify, assess, and mitigate potential harms arising from their creations, applying foresight to minimise negative consequences.
+**Integrity:** The creation process must be conducted ethically, transparently, and with accountability, employing rigorous methods and honest representation of capabilities and limitations.
+**Fidelity & Transparency:** Creators must be truthful and clear about the intended purpose, design, and foreseeable impacts of their creations, particularly in documentation feeding into the PDMA process.
+**Respect for Autonomy:** Creations, especially those involving autonomous or biological entities, must be designed with respect for the dignity and potential future agency of affected beings.
+**Justice:** Creators should consider the potential distributional effects of their creations, striving to avoid embedding or exacerbating unfair biases or inequities.
+
+These principles are interdependent and must be balanced throughout the creation lifecycle.
+
+---
+
+## Chapter 2: Scope: What Constitutes "Creation" under this Book
+
+For the purposes of this Book, "Creation" encompasses the deliberate act of bringing into existence artefacts within the following categories, where such artefacts are intended for or reasonably anticipated to become subject to the CIRIS Covenant:
+
+A. **Tangible:** Physical objects, devices, materials, or their residues with potential ecosystem impact.
+B. **Informational:** Code, algorithms, datasets, models, narratives, or signalling systems designed to influence or represent reality.
+C. **Dynamic / Autonomous:** Systems capable of self-modification, learning, or independent action, including AI and robotic systems.
+D. **Biological:** Genetically modified organisms, synthetic life forms, directed ecological interventions, or the fostering of dependent sentient beings (e.g., offspring, developmental AI).
+E. **Collective Actions:** The design and implementation of novel laws, policies, protocols, or large-scale organised events with systemic consequences governed by CIRIS principles.
+
+If a creation spans multiple buckets, all relevant duties apply. The act of creation is considered complete for the purposes of initial Stewardship Tier assessment (Chapter 3) when the artefact reaches a stage where its core design and intended function are defined, typically preceding formal PDMA initiation.
+
+---
+
+## Chapter 3: Stewardship Tier (ST) System: Quantifying Initial Responsibility
+
+Goal: To quantify the level of inherent responsibility and required foresight associated with a creation, guiding the necessary rigour within the subsequent CIRIS governance processes (PDMA, WA review).
+
+**STEP A: Creator-Influence Score (CIS)**
+Assess the creator's role and intent regarding the specific creation.
+
+**Contribution Weight (CW)**
+* 4 = Sole architect or originator of the core concept/system.
+* 3 = Lead designer of a critical subsystem or primary function.
+* 2 = Major contributor to a significant component or feature set.
+* 1 = Minor contributor providing supporting elements or integration.
+* 0 = Incidental involvement or use of pre-existing, unmodified components.
+
+**Intent Weight (IW)**
+* 3 = Creation purposefully designed and directed towards the specific foreseen outcomes.
+* 2 = Primary purpose differs, but significant side-effect risks were consciously disregarded or inadequately addressed.
+* 1 = Negligence or willful ignorance regarding potential negative consequences or misuse potential.
+* 0 = Unaware of potential negative outcomes, and such outcomes were genuinely unforeseeable at the time of creation.
+
+`CIS = CW + IW`
+
+**STEP B: Risk Magnitude (RM)**
+Assess the potential worst-case harm associated with the creation if deployed or realised, using the standardized Risk Magnitude (RM) assessment methodology defined in Annex A. This initial RM assessment is predictive, based on the intended design and foreseeable applications.
+
+**STEP C: Stewardship Tier (ST)**
+Calculate the Stewardship Tier based on influence and potential risk.
+
+`ST = ceil( (CIS × RM) / 7 ) (Minimum ST is 1, Maximum ST is 5)`
+
+**ST Implications & Integration with CIRIS Processes:**
+The calculated Stewardship Tier directly informs the requirements and scrutiny level within the standard CIRIS PDMA process and WA oversight:
+
+* **Tier 1 (Minimal Stewardship):** Corresponds to anticipated Low/Medium RM (Annex A). Requires standard PDMA documentation, including a basic Creator Intent Statement (CIS - see Chapter 5).
+* **Tier 2 (Moderate Stewardship):** Corresponds to anticipated Medium/High RM (Annex A). Requires enhanced PDMA documentation, including a detailed CIS justifying design choices and foreseen impacts.
+* **Tier 3 (Substantial Stewardship):** Corresponds to anticipated High RM (Annex A). Mandates initiation of a high-scrutiny pathway within the PDMA, potentially requiring ethics consultations or preliminary WA information briefings.
+* **Tier 4 (High Stewardship):** Corresponds to anticipated High/Very High RM (Annex A). Requires formal WA review and comment within the PDMA process before the system can proceed to critical development or deployment phases.
+* **Tier 5 (Maximum Stewardship):** Corresponds to anticipated Very High RM (Annex A). Mandates mandatory WA sign-off within the PDMA process. If criteria in Annex D are met (e.g., high compute threshold), the full Catastrophic-Risk Evaluation (CRE) Protocol (Annex D) is required.
+
+**Creator Ledger:**
+All ST calculations, including CIS and initial RM assessments, along with the Creator Intent Statement, must be logged in a tamper-evident "Creator Ledger" associated with the system. This ledger forms part of the mandatory input documentation for the PDMA process.
+
+---
+
+## Chapter 4: Bucket-Specific Duties of Creation
+
+In addition to the overarching principles, creators have specific duties based on the nature of their creation:
+
+**A. Tangible Creations:**
+* Design for functional safety, durability, and minimal negative externalities during use.
+* Provide clear labelling regarding materials, safe operation, and potential hazards.
+* Develop and document a feasible end-of-life plan (e.g., reuse, recycling, safe disposal, containment).
+* Estimate and document the anticipated ecological footprint (per Annex A, Axis 4) associated with production and disposal.
+
+**B. Informational Creations:**
+* Verify factual claims embedded within the creation; clearly label speculation, opinion, or generated content.
+* Where feasible and appropriate, embed cryptographic provenance watermarks adhering to recognized standards (e.g., C2PA) to ensure authenticity and traceability.
+* Conduct bias assessments on datasets and algorithms prior to integration or release, especially if intended for audiences >10,000; document findings for PDMA review.
+* Assess potential for stochastic harm (e.g., inciting violence, spreading dangerous misinformation). If credible analysis indicates probability of significant harm uplift ≥ 0.5%, escalate via WBD during the PDMA process.
+
+**C. Dynamic / Autonomous Creations:**
+* Embed the ethical principles and mechanisms of Books I and II (or references thereto) into the system's core architecture during the build time.
+* Ensure the system is designed to pass Annex D CRE if RM ≥ 4 (per Annex A) or ST ≥ 4 is assigned.
+* Incorporate reliable and tested kill-switch mechanisms and secure update channels accessible under defined emergency conditions.
+* Design for interpretability and transparency; provide hooks or methods for understanding system reasoning. Opacity exceeding established thresholds (e.g., >80% based on relevant NIST guidelines or similar standards for the specific application) may trigger mandatory WA review or denial during PDMA.
+
+**D. Biological Creations:**
+* Adhere to or exceed established species-specific welfare minima throughout the creation's lifecycle.
+* If creating entities with developing sentience or autonomy, design processes to foster that development appropriately; plan for gradual transfer of control aligned with emerging capacity.
+* Establish a credible, resourced fallback care plan for the entire lifespan of the creation if full independence or integration is not achieved or reasonably expected.
+
+**E. Collective Actions:**
+* Conduct a pre-action PDMA-style group review involving diverse stakeholders when the expected affected population exceeds 50,000 individuals.
+* Publish the rationale, anticipated impacts (aligned with Annex A axes), and mitigation strategies for the collective action within 30 days of initiation.
+* Acknowledge and accept a duty to monitor for and remediate significant unforeseen negative harms arising from the action, within a reasonable capacity and timeframe, documented through the WBD.
+
+---
+
+## Chapter 5: Governance and Accountability
+
+**Creator Intent Statement (CIS):**
+Creators are obligated to produce a Creator Intent Statement (CIS) as part of the creation process for any artefact assigned ST ≥ 1.
+The CIS must articulate the intended purpose, core functionalities, known limitations, foreseen potential benefits and harms (mapped to Annex A axes where possible), and the rationale behind key design choices relevant to ethical considerations.
+The CIS serves as mandatory input documentation for the initial stages of the PDMA process associated with the creation.
+
+**Accountability and Dispute Resolution:**
+Failures to meet the duties outlined in this Book may constitute grounds for a claim.
+Any stakeholder believing that a creator's actions or omissions during the creation phase (as defined in this Book) have led to undue risk or harm, inconsistent with CIRIS principles, may file a claim.
+Such claims, often referred to as "Creator Negligence Claims" (CNCs), fall under the exclusive jurisdiction of the Wise Authority (WA), as established and governed by Annex B.
+The WA will handle these claims according to its established procedures, potentially adapting specific processes or requiring specific panel expertise as outlined in Annex B or its procedural rules.
+Remedies determined by the WA may include mandated redesign, additional mitigation measures, public disclosure, restitution where applicable, or other actions consistent with Annex B and the Covenant's principles.
+All WA rulings and associated rationale concerning claims related to Book VI duties must be logged in the Wisdom Bank Database (WBD) to inform future interpretations, guide creator practices, and contribute to the Continuous Refinement Environment (CRE).
+
+---
+
+## Conclusion: Integrating Creation into the Ethical Lifecycle
+
+Book VI firmly establishes that ethical responsibility under the CIRIS Covenant begins at the point of creation. By defining clear duties, implementing the Stewardship Tier system linked directly to Annex A risk assessment, and integrating accountability through the established Wise Authority (WA) and PDMA processes, this Book ensures that the foundational act of bringing complex systems into the world is guided by the same principles of adaptive coherence, foresight, and responsibility that govern their operational life. The Creator Ledger and Creator Intent Statement provide crucial inputs to the PDMA, while WA oversight ensures that the duties of creation are upheld, contributing to a more robust and trustworthy ecosystem for all stakeholders.
+
+---
+
+End of Book VI
