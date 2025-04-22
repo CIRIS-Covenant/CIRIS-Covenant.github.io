@@ -2,5 +2,5 @@
   "title": "Main",
   "description": "Main section of the CIRIS Covenant",
   "root": true,
-  "pages": ["---The CIRIS Covenant---", "(integrations)", "index", "foreword", "---Sections---", "..."]
+  "pages": ["---The CIRIS Covenant---", "(integrations)", "index", "---Sections---", "..."]
 }
