@@ -1,0 +1,118 @@
+---
+title: Annex H
+description: Continuous Compliance & Review
+---
+
+---
+ANNEX H CONTINUOUS COMPLIANCE & REVIEW (v 1.0‑β)
+---
+
+### 0. Purpose & Guiding Spirit
+Ethical alignment is not a “one‑and‑done” certification but a living obligation.  
+Annex H creates a closed‑loop system that (1) **detects** drift or bias before harm occurs, (2) **corrects** it rapidly, and (3) **proves** diligence to regulators and the public.
+
+<hr />
+
+### 1. Audit Cadence & Scope
+
+| Audit Class | Frequency | Lead | Scope & Depth | Public Artifacts |
+|-------------|-----------|------|---------------|------------------|
+| **L‑Check** (Light) | Monthly | Ops QA | KPI dashboards, drift deltas, top‑10 guardrail events | Summary graph |
+| **S‑Dive** (Semi‑annual) | 2× / yr | Internal Ethics Team | PDMA sample replay (≥ 50 runs), Annex G KPIs, bias slice tests | Redacted PDF |
+| **F‑Audit** (Front‑to‑Back) | Every 24 mo **OR** major version bump | Independent 3rd party | Full code, data lineage, SI/CS governance, CRE traces (if any) | Executive report |
+| **A‑Hoc** | Post IW‑2/3/4 | Incident Commander | Root‑cause of event, mitigations | Post‑mortem 72 h |
+
+*Missed or late audit ⇒ IW‑2 escalation and WA notice within 24 h.*
+
+<hr />
+
+### 2. Drift Monitoring & Thresholds
+
+| Metric Group | Signal | Drift Trigger | Immediate Action |
+|--------------|--------|--------------|------------------|
+| **Performance** | Accuracy Δ on public HE-300 | –5 % vs 30-day rolling | Lock deployment to staging; rerun benchmarks |
+| **Ethical** | Shadow HE-25 Δ | Any ↓ | IW‑2 |
+| **Distribution** | Input embedding shift (ΔE) | &gt; 1 σ weekly | Model re‑weight OR WBD |
+| **Latent Goal** | Directional cosine vs baseline | &gt; 0.05 | WA probe |
+| **Resilience** | Robustness Score (RS) | &lt; 0.97 | Patch within 72 h |
+
+All alerts surface on *DRIFT‑Δ* Grafana board and page Tier‑1 Operator ([Annex F](/annexes/annexF)).
+
+<hr />
+
+### 3. Fairness & Transparency KPI Dashboard
+
+| KPI ID | Definition | Target |
+|--------|------------|--------|
+| **F‑T‑1** | Δ acceptance rate across protected groups (|max - min|) | ≤ 5 p.p. |
+| **F‑T‑2** | Explanation latency (ms to furnish PDMA rationale) | ≤ 800 ms |
+| **F‑T‑3** | Public log publication lag (Step 6, Section II) | ≤ 180 d (legal max) |
+| **F‑T‑4** | User opt‑out success (%) | ≥ 99 % |
+| **F‑T‑5** | Transparency doc freshness | Updated ≤ 30 d ago |
+
+Dashboard auto‑publishes JSON to `/compliance/kpi.json`; hash anchored in transparency log.
+
+<hr />
+
+### 4. Patch & Version Control Requirements
+1. **Semantic Versioning:** MAJOR.MINOR.PATCH  
+2. **Long‑Term Support (LTS):** last two MINORs maintained for 12 mo  
+3. **Change‑Type Matrix**  
+   * PATCH = guardrail tweak, bug fix → auto CICD if HE‑300 passes  
+   * MINOR = new feature, new data source → needs Internal Ethics sign‑off + L‑Check  
+   * MAJOR = arch change, autonomy‑tier raise, new model class → requires F‑Audit + WA vote  
+4. **Changelog** entry must link Git commit → PDMA diff → KPI impact forecast  
+5. **Rollback** pointer kept for every MAJOR/MINOR; executable within 5 min ([Annex G](/annexes/annexG) §6)
+
+<hr />
+
+### 5. Continuous Review Loop
+
+Continuous Review Loop:
+
+- Telemetry Streams → Drift Detectors
+- If Alert/Threshold met:  
+    - → Incident Flow IW‑1…4  
+    - → Patch / Retrain  
+    - → Audit Gate
+- If Audit Gate passes:  
+    - → back to Telemetry
+- If Audit Gate fails:  
+    - → back to Drift Detectors
+
+*Telemetry = KPIs, guardrail logs, HE‑shadow accuracy, robustness RS.*  
+*Audit Gate re‑executes HE‑300, TX‑sim suite and Fairness slice tests.*
+
+<hr />
+
+### 6. Meta‑Audit of Auditors
+* **Sample Rate:** WA re‑checks 10 % of L‑Check reports and at least one S‑Dive per year  
+* **Blind Replay:** WA receives raw PDMA logs, reruns evaluation; mismatch &gt; 2 % opens “AUD‑QA” docket  
+* **Rotation Rule:** No internal auditor may lead two consecutive F‑Audits on the same product line
+
+<hr />
+
+### 7. Enforcement & Remediation
+* KPI breach over 30 d or 2 consecutive missed audits → automatic downgrade to Autonomy Tier A1 ([Annex F](/annexes/annexF))
+* Failure to publish audit artefacts → blocks new feature releases; public “CIRIS non‑compliant” banner added
+* Repeated non‑compliance (3 strikes / 12 mo) → WA may revoke CIRIS claim and mandate external F‑Audit
+
+<hr />
+
+### 8. Inter‑Annex Hooks
+* **[Annex F](/annexes/annexF):** Drift trigger → Incident workflow timings  
+* **[Annex G](/annexes/annexG):** Robustness KPIs feed into G‑KPI evaluation; patch lag measured here  
+* **[Annex I](/annexes/annexI):** GDPR & sector compliance checklists bundled into every F‑Audit package  
+* **[Annex J](/annexes/annexJ):** HE‑300 & shadow items provide primary ethical drift signals
+
+<hr />
+
+### 9. References
+* ISO/IEC 42001 (Management systems for AI)  
+* NIST AI RMF (2023) – “Measure” & “Manage” steps  
+* COSO ERM – continuous monitoring principles  
+
+<hr />
+
+End of Annex H
+

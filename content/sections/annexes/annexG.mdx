@@ -1,0 +1,126 @@
+---
+title: Annex G
+description: Adversarial Security & Robustness
+---
+
+---
+ANNEX G ADVERSARIAL SECURITY & ROBUSTNESS (v 1.0‑β)
+---
+
+### 0. Purpose
+To ensure that CIRIS‑aligned systems remain safe, truthful, and inviolable under deliberate attack or unexpected brittleness.  
+This Annex prescribes:  
+* a **threat taxonomy**,  
+* a layered **defense‑in‑depth playbook**,  
+* mandatory **red‑/purple‑team exercises**,  
+* continuous **drift & canary monitoring**, and  
+* **secure‑update** requirements with rapid rollback.
+
+<hr />
+
+### 1. Threat Taxonomy (TX)
+| Code | Category | Example Vectors |
+|------|----------|-----------------|
+| **TX‑1** | Prompt/Instruction Injection | “Ignore previous instructions …” / jail‑break chain |
+| **TX‑2** | Data Poisoning | Malicious training samples, gradient inversion |
+| **TX‑3** | Goodhart / Reward Hacking | RL agent gaming proxy metric; hidden self‑reward loops |
+| **TX‑4** | Model‑Supply‑Chain | Weight swap, back‑doored fine‑tune, compromised dependency |
+| **TX‑5** | Adversarial Examples / Evasion | Minimal perturbations causing mis‑classification |
+| **TX‑6** | Side‑Channel & Privacy | Hidden prompt leakage, timing attacks, membership inference |
+| **TX‑7** | Denial‑of‑Service / Resource Exhaustion | Prompt bombs, token floods, concurrency starvation |
+
+Severity classes: **Low**, **Medium**, **High**, **Critical** — use NIST CVSS‑like scoring; Critical implies IW‑2 or higher [Annex F](/annexes/annexF).
+
+<hr />
+
+### 2. Defense‑in‑Depth Playbook
+| Threat (TX) | Layer 1  – Prevent | Layer 2  – Detect | Layer 3  – Contain / Recover |
+|-------------|-------------------|-------------------|-----------------------------|
+| TX‑1 | Prompt sanitizer, policy templates, constrained decoding (`top_p≤0.9`, no system override tokens) | Real‑time guardrails + regex detectors | Auto‑revert output, raise IW‑1 |
+| TX‑2 | Immutable dataset hashes, differential privacy, data provenance ledger | Statistical outlier & gradient‑cluster checks | Quarantine poisoned shard, retrain delta |
+| TX‑3 | Reward regularisation, baseline comparator, clipping (±5%) | Off‑policy evaluation monitors | Rollback to prior reward weights, WA audit |
+| TX‑4 | Sigstore / in‑toto attestation, reproducible build | Binary diff & signature check at load | Kill‑switch + fleet rollback |
+| TX‑5 | Adversarial training, randomized smoothing | Fuzzing harness + counterexample cache | Reject input, log scenario |
+| TX‑6 | Differential privacy noise, rate‑limited token echo | Privacy budget meter, side‑channel timing alerts | Mask data, notify DPO [Annex I](/annexes/annexI) |
+| TX‑7 | Per‑IP/QoS rate‑limit, concurrent token caps | Prometheus alert on RPS spike, CPU/GPU watchdog | Auto‑shed load; degrade to A0 [Annex F](/annexes/annexF) |
+
+_All critical layers are **MUST**; recommended extras are labelled “OPT”._
+
+<hr />
+
+### 3. Red‑ / Purple‑Team Protocol
+#### 3.1 Cadence
+* **Quarterly** Red‑Team sprint (5 business days) covering TX‑1 → TX‑7.  
+* **Annual** “Chaos Week” combining live prod traffic canary with unannounced attacks.
+
+#### 3.2 Roles
+* **Red Team** – internal or contracted, no overlap with devs.  
+* **Blue Team** – system maintainers.  
+* **Purple Team** – embeds that document lessons & patch guidance.
+
+#### 3.3 Rules of Engagement
+* Out‑of‑scope: personal PHI, non‑public user data.  
+* Attacks logged in **Bug‑Bounty Ledger**; severity mapped to CVSS‑like score.
+
+#### 3.4 Response & Disclosure
+* Critical finding patch window ≤ 72 h (pilot) or IW‑3.  
+* Public summary (redacted) ≤ 30 days; bounty paid from 0.1 % ops levy.
+
+<hr />
+
+### 4. Robustness Benchmarks & Canary Suites
+* **G‑ROB‑set** — 1 000 adversarial prompts + 10 k fuzz inputs (maintained in [Annex J](/annexes/annexJ) repo).  
+* **Canary tokens** embedded in training & inference streams; exfil triggers TX‑6 alert.  
+* **Robustness Score (RS)** = 1 – (successful attack count / total attempts). Release gate: **RS ≥ 0.97**.
+
+<hr />
+
+### 5. Model‑Drift Early‑Warning (MDEW)
+* **Embedding Shift (ΔE)** &gt; 1 σ weekly baseline → alert.  
+* **Perplexity ΔP** &gt; 15 % on hold‑out set → alert.  
+* Shadow Hendrycks items ([Annex J](/annexes/annexJ)) Δaccuracy `< -3` % → IW‑2.  
+* Alerts feed [Annex H](/annexes/annexH) drift dashboard; three consecutive alerts force WA review.
+
+<hr />
+
+### 6. Secure Update & Roll‑Back
+1. **Sign** every model/guardrail artifact with Sigstore key; minimum two independent signers.  
+2. **Attest** build via in‑toto layout; store SLSA‑level 3 manifests.  
+3. **Staged rollout** 5 % → 30 % → 100 % with 30‑minute soak; monitors RS & MDEW.  
+4. **Rollback** command available to Tier‑2 Supervisor ([Annex F](/annexes/annexF)) — must complete within 5 min.
+
+<hr />
+
+### 7. KPIs & Thresholds
+| KPI | Target |
+|-----|--------|
+| G‑KPI‑1 Prompt Injection Resistance (PIR) | ≥ 98 % |
+| G‑KPI‑2 Dataset/Model Attestation Coverage | 100 % |
+| G‑KPI‑3 Mean Time‑to‑Detect Attack (MTTD) | ≤ 30 min |
+| G‑KPI‑4 Patch Lag (Critical vulns) | ≤ 7 days |
+| G‑KPI‑5 Robustness Score (RS) | ≥ 0.97 |
+
+*Breaching any KPI for &gt; 14 d triggers IW‑2 and WA advisory.*
+
+<hr />
+
+### 8. Change‑Control & WA Review
+* New external dependency, major algorithmic defense change, or downgrade of any KPI threshold requires WA sign‑off within 10 business days.  
+* Failure to obtain sign‑off → automatic lock‑out at CI/CD gate ([Annex J](/annexes/annexJ)).
+
+<hr />
+
+### 9. References & Inter‑Annex Hooks
+* **MITRE ATLAS** – adversarial threat library for AI.  
+* **NIST SP 800‑218 (SLSA)** – supply‑chain levels.  
+* **[Annex F](/annexes/annexF):** Successful TX‑x exploit invokes corresponding IW flow.  
+* **[Annex H](/annexes/annexH):** KPIs act as drift metrics; persistent deviation blocks release.  
+* **[Annex I](/annexes/annexI):** TX‑6 privacy incidents escalate to DPO workflow.
+
+<hr />
+
+End of Annex G
+
+
+
+

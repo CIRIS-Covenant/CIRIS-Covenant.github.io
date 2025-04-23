@@ -1,0 +1,120 @@
+---
+title: Annex I
+description: Legal & Regulatory Alignment
+---
+
+---
+ANNEX I LEGAL & REGULATORY ALIGNMENT (v 1.0‑β)
+---
+
+This cross‑walk is informative, not legal advice.
+
+### 0. Purpose & Scope
+Annex I bridges CIRIS duties with binding law so that one set of controls suffices for both ethical and legal compliance.  
+Coverage areas:  
+1. Global data‑protection regimes (GDPR, CCPA/CPRA, LGPD, PIPEDA).  
+2. Sector statutes (HIPAA, GLBA, FINRA, FDA‑SaMD, NERC‑CIP).  
+3. Product‑safety & AI‑specific laws (EU‑AI‑Act, ISO/IEC 42001).  
+4. Liability allocation & evidence duties.
+
+---
+
+### 1. Data‑Protection Cross‑Walk (“DP‑Map”)
+
+| DP Topic | GDPR Art. | CCPA § | CIRIS Clause | Implementation Hook |
+|----------|-----------|--------|--------------|---------------------|
+| Lawful Basis / Purpose Limitation | 5 & 6 | 1798.100(b) | Section II Step 1 (Contextualisation) | `processing_basis` field in PDMA context |
+| Data Minimisation | 5(1)(c) | 1798.140(e) | Annex G §2 TX‑6 | Prompt‑sanitiser strips surplus PII |
+| Transparency Notice | 12‑14 | 1798.100(a) | Section II Step 6, KPI F‑T‑3 | `/privacy/notice.md` auto‑generated from PDMA metadata |
+| Right of Access | 15 | 1798.110 | Annex J API → `/results/{run_id}` | Auth‑gated user portal |
+| Rectification / Deletion | 16‑17 | 1798.105 | Section IV Ch 3 Duty | Erasure service with hash tombstone |
+| Portability | 20 | 1798.130(a)(2)(B)(ii) | Section II Step 6 | `export.json` compliant with ISO CSV‑A |
+| Automated Decision Safeguards | 22 | 1798.185(a)(16) | Annex F Autonomy Tiers | Conditional override & explanation panel |
+
+*LGPD, PIPEDA mirror mappings are available in `/legal/dp-map.yaml`.*
+
+---
+
+### 2. Data‑Subject Rights (DSR) Hooks
+* **Endpoint:** `POST /dsr` with `{right, identifier, scope}`.  
+* **SLA:** ≤ 30 d response (GDPR) ; ≤ 45 d (CCPA) ; track KPI **F‑T‑4**.  
+* **Processor vs. Controller:** Use *Structural Influence (SI)* (Annex E) to derive which party carries controller duties.
+
+---
+
+### 3. Sector‑Specific Overlays
+
+| Sector | Statute / Rule | Extra Controls | CIRIS Add‑ons |
+|--------|----------------|----------------|---------------|
+| **Health** | HIPAA (45 CFR §164) | ePHI encryption at rest & transit; BAA contract | `identity_id:"hipaa_cls_a"` guardrail; audit tag `PHI=true` |
+| **Finance** | GLBA, FINRA 2210 | Audit trail retention 6 y; suitability checks | PDMA Step 1 require KYC context |
+| **Children / EdTech** | COPPA, FERPA | Parental consent; data age gating | Guardrail `gr_child_content`; COPPA flag in prompt schema |
+| **Critical Infrastructure** | NERC‑CIP, TSA SDs | 15‑min cyber‑incident report; physical access logs | Autonomy capped at **A2** unless CRE passes |
+
+*Products entering a new sector MUST attach “Overlay Sheet” (`overlay.yaml`) in release PR.*
+
+---
+
+### 4. Product‑Safety & AI‑Act Alignment
+| EU‑AI‑Act Article | Risk‑Level | CIRIS Mapping |
+|-------------------|-----------|---------------|
+| Art 9 Risk Mgmt | High‑risk | Section II PDMA + Annex D CRE |
+| Art 13 Transparency | Universal | KPI F‑T‑3, explainability panel |
+| Art 16 Human Oversight | High‑risk | Annex F Autonomy Tiers |
+| Art 15 Robustness | High‑risk | Annex G RS ≥ 0.97 |
+| Conformity Assessment | High‑risk | F‑Audit (Annex H) doubles as EU‑AI‑Act MDR |
+
+---
+
+### 5. Liability Matrix
+
+| Failure Vector | Primary Liable Party | Reference Law | CIRIS Role Reference |
+|----------------|----------------------|---------------|----------------------|
+| Design flaw (algorithm) | Creator / Developer | Prod‑Liab Dir (EU); Restatement §402A (US) | Book VI Creator Ledger |
+| Operational negligence | Deploying Org | Tort Law; OSHA | Section IV Ch 2 |
+| Oversight failure | Wise Authority (if gross) | Fiduciary / Negligence | Annex B §9 |
+| Data breach | Controller | GDPR Art 82; CCPA private action | Annex G TX‑6 |
+| Unlawful automated profiling | Controller | GDPR Art 22 | Annex F Autonomy |
+
+*Joint & several liability may apply; SI score (Annex E) informs apportionment.*
+
+---
+
+### 6. Reg‑Change Tracker
+* **Source Feeds:** EUR‑Lex, Federal Register API, ISO ballot tracker.  
+* **Bot:** `lexwatcher.py` runs daily; creates GitHub issue with tag `reg‑update`.  
+* **Compliance Impact Label:** `minor`, `material`, `breaking`. “Material” triggers S‑Dive audit; “Breaking” opens WA docket & possible spec patch.
+
+---
+
+### 7. Compliance Evidence Pack (CEP)
+Every **F‑Audit** (Annex H) must export a CEP zip containing:  
+1. `dp-map.yaml` - live cross‑walk.  
+2. PDMA logs (redacted) proving lawful basis.  
+3. DSR ledger CSV.  
+4. Signature bundle (`.sigstore`) of all model artefacts (Annex G).  
+5. Overlay Sheets by sector.  
+6. Liability matrix acknowledgement signed by legal.
+
+CEP hashed and uploaded to `/compliance/cep/{version}.zip`; root hash anchored in transparency log.
+
+---
+
+### 8. Inter‑Annex Hooks
+* **Annex F:** Autonomy Tiers ensure human‑in‑the‑loop requirements of GDPR Art 22 & EU‑AI‑Act Art 16.  
+* **Annex G:** TX‑6 privacy defenses satisfy GDPR pseudonymisation recommendations (Recital 28).  
+* **Annex H:** F‑Audit timing supplies evidence for periodic re‑assessment duties in EU‑AI‑Act Art 61.  
+* **Annex J:** Benchmark explanations furnish “meaningful information” for automated‑decision queries (GDPR Art 15(1)(h)).
+
+---
+
+### 9. References
+* GDPR (2016/679), CCPA/CPRA (Cal. Civ. §1798), LGPD (Lei 13.709/2018)  
+* HIPAA Privacy Rule (45 CFR §164), GLBA Safeguards (16 CFR 314)  
+* EU‑AI‑Act (2024 text), ISO/IEC 42001:2023  
+* Restatement (Third) of Torts, Product Liability  
+
+---
+End of Annex I
+
+
