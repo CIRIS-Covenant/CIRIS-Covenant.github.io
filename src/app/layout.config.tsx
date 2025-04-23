@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
 /**
@@ -12,7 +11,7 @@ export const baseOptions: BaseLayoutProps = {
   nav: {
     title: (
       <>
-        <Image
+        <img
           src="/cirisImg.jpg"
           alt="CIRIS Logo"
           width={24}
