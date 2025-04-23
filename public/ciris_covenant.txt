@@ -1051,16 +1051,6 @@ Birth and death are now mirrored phases under one ethical canopy. Post-mortem le
 End of Book VIII
 
 
-// content/sections/addenda/index.mdx
----
-title: Addenda Index
-description: Index page for the Addenda section.
----
-
-# Addenda
-
-This is the addenda section.
-
 
 // content/sections/annexes/index.mdx
 ---
@@ -1296,31 +1286,6 @@ D‑5  Failure Response
 • Deployment blocked until deficiencies remediated and re‑audited.
 
 
-// content/sections/backmatter/index.mdx
----
-title: Backmatter Index
-description: Index page for the Backmatter section.
----
-
-────────────────────────────────────────
-BACK‑MATTER
-────────────────────────────────────────
-
-Call for Adversarial Review
-We invite safety labs, independent researchers, and civil‑society organisations to stress‑test CIRIS 1.0‑β.
-Submit issues at https://github.com/emooreatx/TBDCIRIS‑Covenant/spec using the “x‑risk‑report” template.
-Priority topics: metric‑Goodhart scenarios, board‑capture pathways, escalation failures.
-Bounties are available for validated critical findings.
-────────────────────────────────────────
-
-Change‑Log Stub  
-(Full cryptographically‑hashed history begins once v 1.0‑β is tagged.)
-• 2025‑04‑16 v 1.0‑β initial release — risk‑limited, 24‑month sunset.
-• —–––––– 
-Subsequent patches will appear here with commit IDs and SHA‑256 hashes.
-────────────────────────────────────────
-End of Specification
-
 
 // content/sections/annexes/annexE.mdx
 ---
@@ -1328,7 +1293,7 @@ title: Annex E
 description: Structural Influence (SI) and Coherence Stake (CS) Mechanisms
 ---
 
-CIRIS Covenant Version 1.0‑β — Addendum E
+CIRIS Covenant Version 1.0‑β — A E
 Structural Influence (SI) and Coherence Stake (CS) Mechanisms
 Issued: 2025‑04‑18
 Version: 1.0‑β
@@ -1337,7 +1302,7 @@ Version: 1.0‑β
 ---
 
 ### 1. Purpose and Scope
-This Addendum defines Structural Influence (SI) and Coherence Stake (CS) for weighted governance decisions—such as covenant amendments, sunset evaluations, ethical deferrals, and resource allocations. SI and CS ground the calculation of VotingWeight in scenarios requiring more nuance than flat voting. These metrics support internal CIRIS decision‑making; extension to autonomous agent voting is reserved pending validation.
+This Annex defines Structural Influence (SI) and Coherence Stake (CS) for weighted governance decisions—such as covenant amendments, sunset evaluations, ethical deferrals, and resource allocations. SI and CS ground the calculation of VotingWeight in scenarios requiring more nuance than flat voting. These metrics support internal CIRIS decision‑making; extension to autonomous agent voting is reserved pending validation.
 
 
 ---
@@ -1438,7 +1403,7 @@ Anomaly Detection: Monitor SI/CS dynamics for collusion or gaming.
 
 Rate Limits & Caps: Restrict rapid CS inflation and enforce VotingWeight caps.
 
-Conflict Recusal: Agents with direct conflicts must recuse per Addendum A.
+Conflict Recusal: Agents with direct conflicts must recuse per Annex A.
 
 
 
@@ -1447,4 +1412,40 @@ Conflict Recusal: Agents with direct conflicts must recuse per Addendum A.
 ### 7. Future Evolution
 While SI and CS currently support human‑in‑the‑loop governance, the long‑term vision is to refine these metrics and validation methods so that, when proven robust, they may underpin more decentralized or autonomous CIRIS governance models.
 
-End of Addendum E
+End of Annex E
+
+// content/sections/addenda/index.mdx
+---
+title: Addenda Index
+description: Index page for the Addenda section.
+---
+
+# Addenda
+
+This is the addenda section.
+
+
+// content/sections/backmatter/index.mdx
+---
+title: Backmatter Index
+description: Index page for the Backmatter section.
+---
+
+────────────────────────────────────────
+BACK‑MATTER
+────────────────────────────────────────
+
+Call for Adversarial Review
+We invite safety labs, independent researchers, and civil‑society organisations to stress‑test CIRIS 1.0‑β.
+Submit issues at https://github.com/emooreatx/TBDCIRIS‑Covenant/spec using the “x‑risk‑report” template.
+Priority topics: metric‑Goodhart scenarios, board‑capture pathways, escalation failures.
+Bounties are available for validated critical findings.
+────────────────────────────────────────
+
+Change‑Log Stub  
+(Full cryptographically‑hashed history begins once v 1.0‑β is tagged.)
+• 2025‑04‑16 v 1.0‑β initial release — risk‑limited, 24‑month sunset.
+• —–––––– 
+Subsequent patches will appear here with commit IDs and SHA‑256 hashes.
+────────────────────────────────────────
+End of Specification

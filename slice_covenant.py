@@ -58,16 +58,25 @@ def strip_frontmatter(content_lines):
     """Removes YAML frontmatter from a list of lines."""
     if len(content_lines) > 1 and content_lines[0].strip() == '---':
         try:
-            end_index = content_lines[1:].index('---') + 1
-            return content_lines[end_index+1:]
+            # Find the *next* '---' line
+            end_index = -1
+            for i, line in enumerate(content_lines[1:], start=1):
+                if line.strip() == '---':
+                    end_index = i
+                    break
+            if end_index != -1:
+                 return content_lines[end_index+1:]
+            else:
+                 # No closing '---' found
+                 return content_lines
         except ValueError:
-            # No closing '---' found, assume no frontmatter or malformed
+            # Should not happen with enumerate, but as fallback
             return content_lines
     return content_lines
 
 def generate_pdf(output_pdf_path):
     """
-    Assembles content from specific MDX files (stripping frontmatter)
+    Assembles content from specific MDX files (stripping frontmatter and cleaning characters)
     and generates a PDF using pandoc.
     """
     # Define the specific order and files/patterns to include for PDF assembly
@@ -76,7 +85,7 @@ def generate_pdf(output_pdf_path):
         "content/sections/foreword/foreword.mdx",
         "content/sections/foreword/section0.mdx",
         *sorted(glob.glob("content/sections/main/v[1-8].mdx")),
-        "content/sections/annexes/index.mdx", # Renamed from addenda
+        "content/sections/annexes/index.mdx",
         "content/sections/annexes/annexA.mdx",
         "content/sections/annexes/annexB.mdx",
         "content/sections/annexes/annexC.mdx",
@@ -84,7 +93,6 @@ def generate_pdf(output_pdf_path):
         "content/sections/annexes/annexE.mdx",
         "content/sections/backmatter/index.mdx",
         # Note: formulas, resources-credits, how-to-help are currently excluded
-        # based on previous assembly logic. Add them here if needed.
     ]
 
     print("\nAssembling content for PDF generation...")
@@ -99,15 +107,55 @@ def generate_pdf(output_pdf_path):
                     print(f"  Adding content from: {normalized_path}")
                     with open(file_path, 'r', encoding='utf-8') as infile:
                         lines = infile.readlines()
-                    
+
                     # Strip frontmatter
                     content_lines = strip_frontmatter(lines)
-                    
-                    # Replace custom rules with standard Markdown HR
-                    cleaned_lines = [line.replace('────────────────────────────────────────', '---').replace('──────────────────', '---') for line in content_lines]
 
-                    pdf_content_buffer.extend(cleaned_lines)
-                    pdf_content_buffer.append("\n\\newpage\n") # Add page break between files for PDF
+                    # --- New logic: Prepend title, then skip original title lines ---
+                    current_file_cleaned_lines = []
+                    is_annex_a = (normalized_path == "content/sections/annexes/annexA.mdx")
+
+                    # Prepend simplified title if it's Annex A
+                    if is_annex_a:
+                        current_file_cleaned_lines.append("# Annex A: Flourishing Metrics Framework\n")
+
+                    # Process lines, skipping original title and JSON block
+                    in_json_block = False
+                    skip_next_line_after_rule = False # State to skip the line after the first rule in Annex A
+
+                    for line in content_lines:
+                         # Skip original Annex A title section (rule + text line)
+                         if is_annex_a and '────────────────────────────────────────' in line:
+                              skip_next_line_after_rule = True # Prepare to skip the text line after this rule
+                              continue # Skip the rule itself
+                         if skip_next_line_after_rule:
+                              skip_next_line_after_rule = False # Reset flag
+                              continue # Skip the line containing the original title text
+
+                         # Skip JSON block
+                         if line.strip().startswith('```json'):
+                             in_json_block = True
+                             # Also skip the preceding "Trade-Off Log Schema (JSON)" line for PDF
+                             if current_file_cleaned_lines and "Trade-Off Log Schema (JSON)" in current_file_cleaned_lines[-1]:
+                                 current_file_cleaned_lines.pop()
+                             continue
+                         if in_json_block and line.strip() == '```':
+                             in_json_block = False
+                             continue
+                         if in_json_block:
+                             continue
+
+                         # Apply cleaning
+                         line = line.replace('────────────────────────────────────────', '---')
+                         line = line.replace('──────────────────', '---')
+                         line = line.replace('‑', '-') # Replace non-breaking hyphen
+                         line = line.replace(' ', ' ') # Replace em space
+                         line = line.replace('•', '* ') # Replace bullet
+                         line = line.replace('₂', '2') # Replace subscript 2
+                         current_file_cleaned_lines.append(line)
+
+                    pdf_content_buffer.extend(current_file_cleaned_lines)
+                    pdf_content_buffer.append("\n") # Add a simple newline for separation
 
                 except IOError as e:
                     print(f"  Warning: Could not read file '{file_path}' for PDF assembly: {e}. Skipping.")
@@ -123,21 +171,22 @@ def generate_pdf(output_pdf_path):
     # Generate PDF using pandoc
     if shutil.which("pandoc"):
         print(f"Attempting to generate PDF '{output_pdf_path}' using pandoc...")
-        
-        # Use a temporary file for pandoc input to handle large content
-        with tempfile.NamedTemporaryFile(mode='w+', suffix=".md", delete=False, encoding='utf-8') as temp_md_file:
-            temp_md_file.writelines(pdf_content_buffer)
-            temp_md_path = temp_md_file.name
-        
-        pandoc_cmd = [
-            "pandoc", 
-            temp_md_path, 
-            "-f", "markdown", 
-            "--pdf-engine=xelatex", 
-            "-o", output_pdf_path
-        ]
 
+        # Use a temporary file for pandoc input to handle large content
+        temp_md_path = "" # Initialize path
         try:
+            with tempfile.NamedTemporaryFile(mode='w+', suffix=".md", delete=False, encoding='utf-8') as temp_md_file:
+                temp_md_file.writelines(pdf_content_buffer)
+                temp_md_path = temp_md_file.name
+
+            pandoc_cmd = [
+                "pandoc",
+                temp_md_path,
+                "-f", "markdown",
+                "--pdf-engine=xelatex",
+                "-o", output_pdf_path
+            ]
+
             result = subprocess.run(pandoc_cmd, check=True, capture_output=True, text=True, encoding='utf-8')
             print(f"Successfully created '{output_pdf_path}'.")
         except FileNotFoundError:
@@ -153,9 +202,9 @@ def generate_pdf(output_pdf_path):
             print(f"  An unexpected error occurred during PDF generation: {e}")
         finally:
             # Clean up the temporary file
-            if os.path.exists(temp_md_path):
+            if temp_md_path and os.path.exists(temp_md_path):
                 os.remove(temp_md_path)
-                
+
     else:
          print("Skipping PDF generation: 'pandoc' command not found. Please install pandoc.")
 
@@ -204,10 +253,8 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
                 try:
                     print(f"Writing content to: {output_path}")
                     with open(output_path, 'w', encoding='utf-8') as outfile:
-                        # Write content *excluding* the frontmatter if it exists in buffer
-                        # (Frontmatter should be added manually or by another process if needed in slices)
-                        # For now, we assume frontmatter is handled in the source .txt
-                        outfile.writelines(content_buffer) 
+                        # Write content including frontmatter as it comes from master file
+                        outfile.writelines(content_buffer)
                     write_successful = True
                 except IOError as e:
                     print(f"  Error writing to file '{output_path}': {e}")
@@ -223,12 +270,13 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
                         update_meta_json(meta_json_path, base_name)
 
             current_file_path_for_buffer = new_section_path_relative
-            content_buffer = [] # Clear buffer for the new section's content
+            content_buffer = [] # Clear buffer for the new section's content (including its frontmatter)
             print(f"Found delimiter for: {current_file_path_for_buffer}")
 
         elif current_file_path_for_buffer:
-            content_buffer.append(line)
+            content_buffer.append(line) # Add line (could be frontmatter or content)
 
+    # --- Write the very last buffer after the loop finishes ---
     if current_file_path_for_buffer and content_buffer:
         output_path = os.path.normpath(current_file_path_for_buffer)
         output_paths_written.add(output_path)
@@ -255,6 +303,7 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
             if base_name not in ["index", "meta"]:
                 meta_json_path = os.path.join(output_dir, "meta.json")
                 update_meta_json(meta_json_path, base_name)
+    # --- End writing final buffer ---
 
     print(f"Slicing process finished. Processed {len(output_paths_written)} files.")
     return slicing_success
