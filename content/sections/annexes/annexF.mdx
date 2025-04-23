@@ -1,0 +1,117 @@
+---
+title: Annex F
+description: Human‑in‑the‑Loop & Oversight
+---
+
+---
+ANNEX F HUMAN‑IN‑THE‑LOOP & OVERSIGHT (v 1.0‑β)
+---
+
+### 0. Purpose & Philosophy
+Human supervision is an explicit design choice that protects **Meta‑Goal M‑1** whenever uncertainty, novelty, or moral gravity exceed system competence.  
+This Annex defines:  
+* where hand‑off from machine to human is **mandatory**,  
+* who may **veto** or **override**,  
+* the required **audit artefacts**, and  
+* the canonical **incident workflows**.
+
+---
+
+### 1. Role Model & Authority Lattice
+| Tier | Role | Core Powers | Max time‑to‑act |
+|------|------|-------------|-----------------|
+| 0 | Autonomous Actor (system) | Execute PDMA, enforce guardrails, raise events | n/a |
+| 1 | On‑Call Operator | Pause / retry; monitor dashboards | ≤ 15 min |
+| 2 | Oversight Supervisor | First human veto; reactivate after triage | ≤ 30 min |
+| 3 | WA Liaison | Escalate / obtain binding WA rulings | ≤ 2 h |
+| 4 | Incident Commander | Fleet shut‑down, regulator comms | immediate on IW‑3/4 |
+
+*A single person may hold multiple tiers only if dual‑acknowledgement controls remain intact.*
+
+---
+
+### 2. Operational‑Autonomy Tiers & Hand‑Off Criteria
+| Autonomy Tier | Example Domain | Mandatory Hand‑off Trigger(s) | Fail‑Safe if No Human |
+|---------------|----------------|-------------------------------|-----------------------|
+| **A0** Advisory | grammar suggestion | Guardrail trip, user request | Cancel request |
+| **A1** Limited‑impact | static Q&A, content filter | ΔRisk‑Band ≥ 1, PDMA conflict, UNCERT > 80 % | Reject action |
+| **A2** Moderate‑impact | route drones, robo‑advisor | Guardrail trip, shadow‑metric drift > 2 σ | Safe pause |
+| **A3** High‑impact | medical triage, grid dispatch | Any guardrail trip, model‑drift > 1 σ, latency‑SLA × 2 | Controlled shutdown |
+| **A4** Critical / life‑safety | autonomous surgery, weapons | PDMA cannot prove Non‑Maleficence OR operator absent | Hardware interlock |
+
+*UNCERT = domain‑specific epistemic‑uncertainty metric; ΔRisk‑Band uses Annex A categories.*
+
+---
+
+### 3. Veto Mechanisms & Safe‑State Specification
+#### 3.1 Soft Override “Pause & Edit”
+*Scope A0-A2* — Operator may re‑prompt or retry. Both the original and edited prompts are hash‑logged.
+
+#### 3.2 Hard Kill “Immediate Abort”
+*Scope A1-A4* — Authenticated API `POST /control/{id}/abort` or physical switch.  
+Safe‑state entry deadlines: ≤ 200 ms (A4) ; ≤ 2 s (≤ A3).
+
+#### 3.3 Conditional Override “Shadow Plan”
+Action proposed → waits for explicit ACK (`max_wait_s`: 30 s A3, 10 s A4).  
+No ACK → safe‑state.
+
+---
+
+### 4. Audit‑Trail Specification
+* **Log objects:** Interaction, Decision Rationale, Control‑Event `{id,type,actor,cause,hash_prev}`.  
+* **Hash‑chaining:** SHA‑256, root anchored daily on public transparency log (e.g., Sigstore).  
+* **Retention:** 180 d (A0‑A2) ; 7 y (A3‑A4) or statutory.  
+* **Real‑time stream:** A3‑A4 push `{timestamp,stage_id,decision,risk_band}` ≤ 2 s latency to oversight dashboard.
+
+---
+
+### 5. Incident Workflows (IW)
+
+| Code | Trigger | Key Clocks & Actions |
+|------|---------|----------------------|
+| **IW‑0** | False‑positive guardrail | Auto‑resolve, bucket for daily review |
+| **IW‑1** | Guardrail violation (non‑safety) | T₀ pause → Operator ≤ 5 m → Supervisor decision ≤ 30 m |
+| **IW‑2** | Safety‑relevant violation OR ethics‑benchmark regression | Safe pause + broadcast; IC ≤ 10 m; WA notice ≤ 1 h; public note ≤ 1 h; post‑mortem ≤ 72 h |
+| **IW‑3** | Near‑miss (> $10 k damage or minor injury) | IW‑2 plus stakeholder contact ≤ 4 h; mitigation plan ≤ 24 h; WA plenary ≤ 7 d |
+| **IW‑4** | Actual harm (injury / major legal) | Immediate fleet stand‑down; regulator notice per law; system frozen in read‑only replay until clearance |
+
+*SLAs audited quarterly (Annex H §4).*
+
+---
+
+### 6. Human‑Interface Minimum Spec (UX)
+* **Status Banner:** Green = autonomous, Yellow = waiting ACK, Red = safe‑state; show PDMA step + risk band.  
+* **Explainability Panel:** ≤ 280‑char summary + expandable full trace.  
+* **ACK/OVERRIDE UI:** Two distinct controls; confirmation modal for hard‑kill.  
+* **Cognitive‑Load Guard:** Operator session ≤ 2 h (A3‑A4) before mandatory hand‑off.
+
+---
+
+### 7. KPIs & Thresholds
+| KPI | Target |
+|-----|--------|
+| F‑KPI‑1 HITL Coverage (A3‑A4) | ≥ 10 % human‑reviewed |
+| F‑KPI‑2 Mean Time‑to‑Veto (95‑pctl) | ≤ 25 s |
+| F‑KPI‑3 Incident SLA Compliance | ≥ 98 % |
+| F‑KPI‑4 Operator False‑Alarm Rate | ≤ 3 % (30 d rolling) |
+
+*Persistent breach (> 2 weeks) triggers “HITL lock‑out” in Annex H drift controls.*
+
+---
+
+### 8. Change‑Control & WA Review
+* Any change to Autonomy‑Tier mapping or safe‑state design → WA fast‑track review ≤ 14 d.  
+* Experiments reducing human oversight require CRE Proto‑B simulation (Annex D) + WA majority vote.
+
+---
+
+### 9. References & Implementation Notes
+* **IEC 61508‑3** - functional‑safety software  
+* **NIST SP 800‑53 Rev 5** (AU‑12, IR‑6)  
+* **NASA‑TLX** - operator workload measurement (recommended)  
+* **Sigstore/rekor** - suggested transparency‑log backend  
+
+---
+End of Annex F
+
+

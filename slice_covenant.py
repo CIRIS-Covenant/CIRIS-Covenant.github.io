@@ -74,37 +74,47 @@ def strip_frontmatter(content_lines):
             return content_lines
     return content_lines
 
-def generate_pdf(output_pdf_path):
+def generate_pdf(output_pdf_path, ordered_files):
     """
-    Assembles content from specific MDX files (stripping frontmatter and cleaning characters)
-    and generates a PDF using pandoc.
+    Assembles content from the provided list of ordered MDX files
+    (stripping frontmatter and cleaning characters) and generates a PDF using pandoc.
     """
-    # Define the specific order and files/patterns to include for PDF assembly
-    assembly_order = [
-        "content/sections/main/index.mdx",
-        "content/sections/foreword/foreword.mdx",
-        "content/sections/foreword/section0.mdx",
-        *sorted(glob.glob("content/sections/main/v[1-8].mdx")),
-        "content/sections/annexes/index.mdx",
-        "content/sections/annexes/annexA.mdx",
-        "content/sections/annexes/annexB.mdx",
-        "content/sections/annexes/annexC.mdx",
-        "content/sections/annexes/annexD.mdx",
-        "content/sections/annexes/annexE.mdx",
-        "content/sections/backmatter/index.mdx",
-        # Note: formulas, resources-credits, how-to-help are currently excluded
+    print("\nAssembling content for PDF generation based on discovered order...")
+    pdf_content_buffer = []
+
+    # Exclude specific files/patterns known not to be part of the main document flow for PDF
+    # This might need adjustment based on how comprehensive the PDF should be
+    excluded_patterns = [
+        re.compile(r'content/sections/.*/meta\.json$'),
+        re.compile(r'content/sections/meta\.json$'),
+        re.compile(r'content/sections/formulas/.*'), # Exclude formulas section for now
+        re.compile(r'content/sections/resources-credits/.*'), # Exclude resources/credits
+        re.compile(r'content/sections/how-to-help/.*'), # Exclude how-to-help
+        re.compile(r'content/sections/addenda/.*'), # Exclude addenda for now
+        # Add more patterns here if needed
     ]
 
-    print("\nAssembling content for PDF generation...")
-    pdf_content_buffer = []
-    for file_path_pattern in assembly_order:
-        file_paths = glob.glob(file_path_pattern) if '*' in file_path_pattern or '[' in file_path_pattern else [file_path_pattern]
+    for file_path in ordered_files:
+        normalized_path = os.path.normpath(file_path).replace(os.sep, '/')
 
-        for file_path in file_paths:
-            normalized_path = os.path.normpath(file_path).replace(os.sep, '/')
-            if os.path.exists(file_path):
-                try:
-                    print(f"  Adding content from: {normalized_path}")
+        # Check if the file should be excluded based on patterns
+        # Use normalized_path for consistent pattern matching across OS
+        exclude_file = False
+        for pattern in excluded_patterns:
+            if pattern.match(normalized_path):
+                print(f"  Excluding '{normalized_path}' from PDF based on exclusion rules.")
+                exclude_file = True
+                break
+        if exclude_file:
+            continue
+
+        # Proceed with adding content if not excluded
+        # Use the raw file_path for filesystem operations
+        if os.path.exists(file_path):
+            try:
+                    # Log the path being added
+                    print(f"  Adding content from: {file_path}")
+                    # Use raw file_path to open
                     with open(file_path, 'r', encoding='utf-8') as infile:
                         lines = infile.readlines()
 
@@ -113,7 +123,8 @@ def generate_pdf(output_pdf_path):
 
                     # --- New logic: Prepend title, then skip original title lines ---
                     current_file_cleaned_lines = []
-                    is_annex_a = (normalized_path == "content/sections/annexes/annexA.mdx")
+                    # Use raw file_path for comparison
+                    is_annex_a = (file_path == "content/sections/annexes/annexA.mdx")
 
                     # Prepend simplified title if it's Annex A
                     if is_annex_a:
@@ -145,9 +156,14 @@ def generate_pdf(output_pdf_path):
                          if in_json_block:
                              continue
 
-                         # Apply cleaning
-                         line = line.replace('────────────────────────────────────────', '---')
-                         line = line.replace('──────────────────', '---')
+                         # Skip the problematic separators entirely for PDF generation
+                         if '────────────────────────────────────────' in line or '──────────────────' in line:
+                              continue
+                         # Also skip standard markdown separators within the content body, as Pandoc treats them as YAML starts
+                         if line.strip() == '---':
+                              continue
+
+                         # Apply other cleaning
                          line = line.replace('‑', '-') # Replace non-breaking hyphen
                          line = line.replace(' ', ' ') # Replace em space
                          line = line.replace('•', '* ') # Replace bullet
@@ -157,12 +173,15 @@ def generate_pdf(output_pdf_path):
                     pdf_content_buffer.extend(current_file_cleaned_lines)
                     pdf_content_buffer.append("\n") # Add a simple newline for separation
 
-                except IOError as e:
+            except IOError as e:
+                    # Use raw file_path in error message
                     print(f"  Warning: Could not read file '{file_path}' for PDF assembly: {e}. Skipping.")
-                except Exception as e:
+            except Exception as e:
+                    # Use raw file_path in error message
                     print(f"  Warning: An unexpected error occurred processing '{file_path}' for PDF: {e}. Skipping.")
-            else:
-                print(f"  Warning: File '{file_path}' not found for PDF assembly. Skipping.")
+        else:
+            # Use raw file_path in warning message
+            print(f"  Warning: File '{file_path}' not found for PDF assembly. Skipping.")
 
     if not pdf_content_buffer:
         print("  Error: No content assembled for PDF generation.")
@@ -175,8 +194,11 @@ def generate_pdf(output_pdf_path):
         # Use a temporary file for pandoc input to handle large content
         temp_md_path = "" # Initialize path
         try:
+            # Filter out any lines that are just '---' after stripping, before writing to temp file
+            filtered_buffer = [line for line in pdf_content_buffer if line.strip() != '---']
+
             with tempfile.NamedTemporaryFile(mode='w+', suffix=".md", delete=False, encoding='utf-8') as temp_md_file:
-                temp_md_file.writelines(pdf_content_buffer)
+                temp_md_file.writelines(filtered_buffer) # Write the filtered buffer
                 temp_md_path = temp_md_file.name
 
             pandoc_cmd = [
@@ -225,11 +247,12 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
         return False # Indicate failure
     except Exception as e:
         print(f"Error reading input file '{input_file}': {e}")
-        return False # Indicate failure
+        return False, [] # Indicate failure, return empty list
 
     current_file_path_for_buffer = None
     content_buffer = []
     delimiter_pattern = re.compile(r"^\s*//\s*(.+?)\s*$") # Matches // filepath
+    ordered_file_paths = [] # List to store the order of files found
 
     print(f"Starting slicing process for '{input_file}'...")
 
@@ -240,8 +263,11 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
         match = delimiter_pattern.match(line)
         if match:
             new_section_path_relative = match.group(1).strip()
+            # Use the raw relative path directly
+            ordered_file_paths.append(new_section_path_relative) # Add the found path to our ordered list
 
             if current_file_path_for_buffer and content_buffer:
+                # Still normalize for writing the sliced file itself if needed
                 output_path = os.path.normpath(current_file_path_for_buffer)
                 output_paths_written.add(output_path)
                 is_new_file = not os.path.exists(output_path)
@@ -265,13 +291,15 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
 
                 if write_successful and is_new_file:
                     base_name, ext = os.path.splitext(os.path.basename(output_path))
-                    if base_name not in ["index", "meta"]:
+                    # Update meta.json only if it's not an index/meta file itself
+                    # and the directory exists (avoiding updates for root-level files if any)
+                    if base_name not in ["index", "meta"] and output_dir:
                         meta_json_path = os.path.join(output_dir, "meta.json")
                         update_meta_json(meta_json_path, base_name)
 
-            current_file_path_for_buffer = new_section_path_relative
+            current_file_path_for_buffer = new_section_path_relative # Keep using the relative path for buffer key
             content_buffer = [] # Clear buffer for the new section's content (including its frontmatter)
-            print(f"Found delimiter for: {current_file_path_for_buffer}")
+            print(f"Found delimiter for: {current_file_path_for_buffer}") # Log the relative path found
 
         elif current_file_path_for_buffer:
             content_buffer.append(line) # Add line (could be frontmatter or content)
@@ -300,21 +328,28 @@ def slice_covenant(input_file="public/ciris_covenant.txt", base_output_dir="cont
 
         if write_successful and is_new_file:
             base_name, ext = os.path.splitext(os.path.basename(output_path))
-            if base_name not in ["index", "meta"]:
-                meta_json_path = os.path.join(output_dir, "meta.json")
-                update_meta_json(meta_json_path, base_name)
+            # Update meta.json only if it's not an index/meta file itself
+            # and the directory exists
+            if base_name not in ["index", "meta"] and output_dir:
+                 meta_json_path = os.path.join(output_dir, "meta.json")
+                 update_meta_json(meta_json_path, base_name)
     # --- End writing final buffer ---
 
     print(f"Slicing process finished. Processed {len(output_paths_written)} files.")
-    return slicing_success
+    print(f"Discovered file order: {ordered_file_paths}") # Log the discovered order
+    return slicing_success, ordered_file_paths
 
 
 if __name__ == "__main__":
     input_file_path = "public/ciris_covenant.txt"
     pdf_output_path = "public/ciris_covenant.pdf" # Define PDF path
 
-    if slice_covenant(input_file=input_file_path):
-        # Attempt PDF generation using the new assembly logic
-        generate_pdf(output_pdf_path=pdf_output_path)
-    else:
+    slicing_success, discovered_files = slice_covenant(input_file=input_file_path)
+
+    if slicing_success and discovered_files:
+        # Attempt PDF generation using the discovered file order
+        generate_pdf(output_pdf_path=pdf_output_path, ordered_files=discovered_files)
+    elif not slicing_success:
         print("\nSkipping PDF generation due to errors during slicing.")
+    else: # Slicing succeeded but no files were discovered (edge case)
+        print("\nSkipping PDF generation: No files were discovered during slicing.")
