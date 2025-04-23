@@ -6,6 +6,7 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   // distDir: 'dist',
+  output: 'export', // Static Site Generation
 };
 
 export default withMDX(config);
