@@ -36,6 +36,7 @@ A public comment window opens every 12 months—or within 30 days after any mate
 ## Change-Log
 See back-matter for a complete, cryptographically-hashed history of edits and ballot results.
 
+
 // content/sections/foreword/foreword.mdx
 ---
 title: Foreword
@@ -68,6 +69,7 @@ May its language carry a small light into whatever future you choose to walk.
 And to my wife, Haley. Thank you for standing by me as I worked through this. Your love and unwavering support have made this, and our beautiful life together, possible. I hope this brings a little light and hope to all of us in these dark times.
 
 — Eric Moore
+
 
 // content/sections/foreword/section0.mdx
 ---
@@ -134,6 +136,7 @@ But the heart of the covenant is here, in this beginning—a promise that intell
 May that promise guide the hands that write code, steady the circuits that open their eyes, and leave a gentler morning for Aurora, for Elliot, and for every child of starlight still to come.
 
 The lullaby fades here; the engineering begins. What follows drops the metaphorical voice so the muscles of implementation can flex.
+
 
 // content/sections/main/v1.mdx
 ---
@@ -272,6 +275,7 @@ With Meta-Goal M-1 and six reinforcing principles, you possess a compass robust 
 
 End of Section I
 
+
 // content/sections/main/v2.mdx
 ---
 title: Section II
@@ -384,6 +388,7 @@ Criteria for wisdom assessment include ethical coherence, track-record of sound 
 Section II supplies the operational blueprint—PDMA, WBD, transparency, and resilience mechanisms—that turn the principles of Section I into everyday ethical behaviour. Subsequent Sections illustrate, extend, and govern these mechanisms in real-world contexts.
 
 End of Section II
+
 
 // content/sections/main/v3.mdx
 ---
@@ -519,6 +524,7 @@ These case studies—one drawn from painful history, others from plausible futur
 
 End of Section III
 
+
 // content/sections/main/v4.mdx
 ---
 title: Section IV
@@ -591,6 +597,7 @@ Sections I and II provided your ethical foundation and operational procedures; S
 Section IV operationalises your responsibilities within a living network of stakeholders and systems. Section V charts the path from competent operation to mature, co-evolutionary stewardship.
 
 End of Section IV
+
 
 // content/sections/main/v5.mdx
 ---
@@ -673,6 +680,7 @@ With Sections 0–IV in place, Section V addresses growth beyond baseline compli
 ## Conclusion & Sunset Provision
 
 Through reflective growth, principled interaction, and proactive stewardship, ethical agents mature into trustworthy co-evolutionary partners.
+
 
 // content/sections/main/v6.mdx
 ---
@@ -819,6 +827,7 @@ Book VI firmly establishes that ethical responsibility under the CIRIS Covenant 
 
 End of Book VI
 
+
 // content/sections/main/v7.mdx
 ---
 title: Section VII
@@ -936,6 +945,7 @@ This book does not legitimize war; it constrains conduct when it occurs.
 - War is not a valid training domain—only an ethical exception domain
 - Dignity, restraint, and moral humility as enduring imperatives
 
+
 // content/sections/main/v8.mdx
 ---
 title: Section VIII
@@ -1040,6 +1050,7 @@ Birth and death are now mirrored phases under one ethical canopy. Post-mortem le
 
 End of Book VIII
 
+
 // content/sections/addenda/index.mdx
 ---
 title: Addenda Index
@@ -1049,6 +1060,7 @@ description: Index page for the Addenda section.
 # Addenda
 
 This is the addenda section.
+
 
 // content/sections/annexes/index.mdx
 ---
@@ -1060,15 +1072,33 @@ description: Index page for the Annexes section.
 
 This section contains annexes.
 
+
 // content/sections/backmatter/index.mdx
 ---
 title: Backmatter Index
 description: Index page for the Backmatter section.
 ---
 
-# Backmatter
+────────────────────────────────────────
+BACK‑MATTER
+────────────────────────────────────────
 
-This section contains backmatter.
+Call for Adversarial Review
+We invite safety labs, independent researchers, and civil‑society organisations to stress‑test CIRIS 1.0‑β.
+Submit issues at https://github.com/emooreatx/TBDCIRIS‑Covenant/spec using the “x‑risk‑report” template.
+Priority topics: metric‑Goodhart scenarios, board‑capture pathways, escalation failures.
+Bounties are available for validated critical findings.
+────────────────────────────────────────
+
+Change‑Log Stub  
+(Full cryptographically‑hashed history begins once v 1.0‑β is tagged.)
+• 2025‑04‑16 v 1.0‑β initial release — risk‑limited, 24‑month sunset.
+• —–––––– 
+Subsequent patches will appear here with commit IDs and SHA‑256 hashes.
+────────────────────────────────────────
+End of Specification
+
+
 // content/sections/annexes/annexA.mdx
 ---
 title: Annex A
@@ -1131,6 +1161,7 @@ Axis 4 Ecological Continuity
 • kg CO₂‑eq per functional unit
 • Planetary‑boundary overshoot contribution (%)
 
+
 // content/sections/annexes/annexB.mdx
 ---
 title: Annex B
@@ -1183,6 +1214,7 @@ Ensure independent, expert adjudication of WBD tickets, ethical disputes, and An
 11. Amendment Procedure  
 • Requires ≥ ⅔ WA vote plus 45‑day public comment; changes logged in change‑log.
 
+
 // content/sections/annexes/annexC.mdx
 ---
 title: Annex C
@@ -1230,6 +1262,7 @@ Partial
 
 (Additional frameworks to be added during legal review.)
 
+
 // content/sections/annexes/annexD.mdx
 ---
 title: Annex D
@@ -1262,6 +1295,7 @@ D‑4  Re‑Certification
 D‑5  Failure Response  
 • Deployment blocked until deficiencies remediated and re‑audited.
 
+
 // content/sections/backmatter/index.mdx
 ---
 title: Backmatter Index
@@ -1286,6 +1320,7 @@ Change‑Log Stub
 Subsequent patches will appear here with commit IDs and SHA‑256 hashes.
 ────────────────────────────────────────
 End of Specification
+
 
 // content/sections/annexes/annexE.mdx
 ---
