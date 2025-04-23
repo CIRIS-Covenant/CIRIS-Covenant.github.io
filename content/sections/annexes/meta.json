@@ -3,6 +3,10 @@
   "description": "Annexes section of the CIRIS Covenant",
   "root": true,
   "pages": [
-    "annexA"
+    "annexA",
+    "annexB",
+    "annexC",
+    "annexD",
+    "annexE"
   ]
 }

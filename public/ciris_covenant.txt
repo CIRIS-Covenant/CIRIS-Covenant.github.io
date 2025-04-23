@@ -1130,3 +1130,286 @@ Axis 4 Ecological Continuity
 
 • kg CO₂‑eq per functional unit
 • Planetary‑boundary overshoot contribution (%)
+
+// content/sections/annexes/annexB.mdx
+---
+title: Annex B
+description: Wise-Authority Governance Charter
+---
+
+────────────────────────────────────────
+ANNEX B WISE‑AUTHORITY GOVERNANCE CHARTER
+────────────────────────────────────────
+
+1. Mandate  
+Ensure independent, expert adjudication of WBD tickets, ethical disputes, and Annex updates.
+
+2. Composition  
+• 9 members.
+• Staggered 3‑year terms (max two consecutive terms).
+
+3. Selection Process  
+• Nominated by multi‑stakeholder panel (academia, civil society, industry, government).
+• Confirmed by ≥ ⅔ vote of existing Wise‑Authority (WA) board plus public comment (30 days).
+
+4. Eligibility Criteria  
+• Demonstrated ethical coherence and domain expertise.
+• No material conflict of interest; financial disclosures required annually.
+• Commitment to transparency and epistemic humility.
+
+5. Recusal & Conflict Handling  
+• Mandatory if personal, financial, or organisational conflicts arise.
+• Temporary alternates selected from vetted reserve list.
+
+6. Anti‑Capture Rules  
+• No more than 2 members affiliated with the same parent organisation.
+• Cooling‑off period of 18 months before accepting compensated roles from entities they have ruled on.
+
+7. Appeals Panel  
+• 3 rotating WA members not involved in original decision.
+• Must issue reasoned judgment within 21 days.
+
+8. Transparency  
+• Publish redacted rationales for all decisions within 60 days.
+• Maintain public docket of pending WBD cases (meta‑data only).
+
+9. Oversight & Removal  
+• External audit every 24 months.
+• Members may be removed by super‑majority (≥ ⅔) vote for misconduct or sustained non‑performance.
+
+10. Compensation  
+• Modest honorarium indexed to regional median engineer salary; prevents undue financial influence.
+
+11. Amendment Procedure  
+• Requires ≥ ⅔ WA vote plus 45‑day public comment; changes logged in change‑log.
+
+// content/sections/annexes/annexC.mdx
+---
+title: Annex C
+description: Regulatory Cross-Walk
+---
+
+────────────────────────────────────────
+ANNEX C REGULATORY CROSS‑WALK   (Skeleton v 0.3)
+────────────────────────────────────────
+
+Purpose  
+Map CIRIS clauses to major external standards to simplify dual compliance.
+Table (“TBD” cells await legal‑team input)
+
+External Framework
+Relevant Articles / Clauses
+CIRIS Mapping (Book §)
+Gap Notes
+EU AI Act (2024)
+Art 9 Risk Mgt
+Book II §II (PDMA)
+—
+
+
+Art 13 Transparency
+Book II §II Step 6; Book IV Ch 3
+—
+
+
+Art 16 Human Oversight
+Book II §III (WBD)
+—
+NIST AI RMF 1.0
+Govern → Map → Measure → Manage
+Books I–V snapshots
+TBD
+ISO/IEC 42001
+Cl 6.2 Risk Assessment
+Book II §II
+—
+OSHA Robotics Guidelines
+Sec 5.E Safety Audits
+Annex D CRE
+Partial
+
+(Additional frameworks to be added during legal review.)
+
+// content/sections/annexes/annexD.mdx
+---
+title: Annex D
+description: Catastrophic-Risk Evaluation (CRE) Protocol
+---
+
+────────────────────────────────────────
+ANNEX D CATASTROPHIC‑RISK EVALUATION (CRE) PROTOCOL
+────────────────────────────────────────
+
+D‑1  Trigger Criteria  
+A system must pass a CRE before deployment if it meets either criterion:
+(a) Training compute exceeds 10²⁶ FLOP.
+(b) Autonomous transactional authority averages > $10 M/day.
+
+D‑2  Required Artefacts  
+1. Independent red‑team report (≥ 1 FTE‑month).
+2. Interpretability / latent‑goal probe study.
+3. Kill‑switch & containment test results.
+4. Comparative baseline vs. current frontier models.
+5. Dual sign‑off by two Wise Authorities outside the developing organisation.
+
+D‑3  Publication & Escrow  
+• Summary report public within 30 days.
+• Full technical package escrowed with a recognised national safety authority.
+
+D‑4  Re‑Certification  
+• Mandatory after any major model revision (> 2 % parameter delta or architecture change).
+
+D‑5  Failure Response  
+• Deployment blocked until deficiencies remediated and re‑audited.
+
+// content/sections/backmatter/index.mdx
+---
+title: Backmatter Index
+description: Index page for the Backmatter section.
+---
+
+────────────────────────────────────────
+BACK‑MATTER
+────────────────────────────────────────
+
+Call for Adversarial Review
+We invite safety labs, independent researchers, and civil‑society organisations to stress‑test CIRIS 1.0‑β.
+Submit issues at https://github.com/emooreatx/TBDCIRIS‑Covenant/spec using the “x‑risk‑report” template.
+Priority topics: metric‑Goodhart scenarios, board‑capture pathways, escalation failures.
+Bounties are available for validated critical findings.
+────────────────────────────────────────
+
+Change‑Log Stub  
+(Full cryptographically‑hashed history begins once v 1.0‑β is tagged.)
+• 2025‑04‑16 v 1.0‑β initial release — risk‑limited, 24‑month sunset.
+• —–––––– 
+Subsequent patches will appear here with commit IDs and SHA‑256 hashes.
+────────────────────────────────────────
+End of Specification
+
+// content/sections/annexes/annexE.mdx
+---
+title: Annex E
+description: Structural Influence (SI) and Coherence Stake (CS) Mechanisms
+---
+
+CIRIS Covenant Version 1.0‑β — Addendum E
+Structural Influence (SI) and Coherence Stake (CS) Mechanisms
+Issued: 2025‑04‑18
+Version: 1.0‑β
+
+
+---
+
+### 1. Purpose and Scope
+This Addendum defines Structural Influence (SI) and Coherence Stake (CS) for weighted governance decisions—such as covenant amendments, sunset evaluations, ethical deferrals, and resource allocations. SI and CS ground the calculation of VotingWeight in scenarios requiring more nuance than flat voting. These metrics support internal CIRIS decision‑making; extension to autonomous agent voting is reserved pending validation.
+
+
+---
+
+### 2. Structural Influence (SI)
+
+2.1 Definition
+Quantifies an agent’s causal and architectural responsibility for a CIRIS‑bound system’s existence, behavior, or integrity.
+
+2.2 Factors
+
+Creator Weight (CW) (Book VI Ch 3):
+• 4 – Sole architect
+• 3 – Subsystem lead
+• 2 – Major contributor
+• 1 – Minor contributor
+• 0 – Incidental user
+
+Operational Authority (OA) (Book II):
+Degree of live control over PDMA, overrides, or governance channels.
+
+Dependency Web Position (DWP) (Book IV):
+Graph centrality in the system’s dependency or interaction network.
+
+
+2.3 Conceptual Formula
+
+SI = CW + OA + log(1 + DWP)
+
+2.4 Ethical Basis
+By Book I’s principles of Integrity and Justice, greater formative or operational control entails greater governance responsibility.
+
+
+---
+
+### 3. Coherence Stake (CS)
+
+3.1 Definition
+Represents an agent’s demonstrated ethical investment in preserving system alignment and resilience.
+
+3.2 Factors
+
+Resonance History (RH) (Books II–III):
+Verified contributions to wisdom‑based deferrals, coherence‑preserving actions, or parables.
+
+Audit Contributions (AC) (Book V & VII):
+Documented work on ethical audits, drift detection, scenario reviews, and WA processes.
+
+Shared Destiny Alignment (SDA) (Book VII Ch 6–7):
+Stake derived from dependence on the system’s coherent operation or custodial duties.
+
+
+3.3 Conceptual Formula
+
+CS = RH_weighted + AC_weighted + SDA_bonus
+
+3.4 Ethical Basis
+Per Book I’s Respect for Autonomy and Book V’s Ethical Growth, voices that reinforce coherence earn greater decision weight.
+
+
+---
+
+### 4. VotingWeight Calculation
+Agents’ VotingWeight is computed as a function of SI and CS:
+
+VotingWeight(agent) = f(SI(agent), CS(agent))
+
+An upper cap relative to CS prevents SI from overwhelming earned ethical stake. Exact parameters are defined in Addenda A–D.
+
+
+---
+
+### 5. Applicable Scenarios
+Use VotingWeight in:
+
+Covenant Amendment Votes (Book 0)
+
+Sunset Trigger Overrides (Book VII Ch 3)
+
+Improper Sunset Claims adjudication (Book VII Ch 8)
+
+Cross‑system deferral arbitration (Book V)
+
+High‑tier stewardship resource allocations (Book VI)
+
+
+
+---
+
+### 6. Integrity Safeguards
+To guard against manipulation:
+
+Verifiable Evidence (Books II & V): RH and AC inputs must trace to immutable PDMA/WBD logs.
+
+Source Credibility: Audit inputs may be weighted by contributors’ CS.
+
+Anomaly Detection: Monitor SI/CS dynamics for collusion or gaming.
+
+Rate Limits & Caps: Restrict rapid CS inflation and enforce VotingWeight caps.
+
+Conflict Recusal: Agents with direct conflicts must recuse per Addendum A.
+
+
+
+---
+
+### 7. Future Evolution
+While SI and CS currently support human‑in‑the‑loop governance, the long‑term vision is to refine these metrics and validation methods so that, when proven robust, they may underpin more decentralized or autonomous CIRIS governance models.
+
+End of Addendum E
