@@ -1,5 +1,8 @@
 {
   "title": "Annexes",
   "description": "Annexes section of the CIRIS Covenant",
-  "root": true
+  "root": true,
+  "pages": [
+    "annexA"
+  ]
 }
