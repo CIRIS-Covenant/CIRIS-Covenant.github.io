@@ -12,6 +12,9 @@ export default function HomePage() {
         <Link href="/sections/main" className="text-white font-semibold underline mt-6">
           Read the full specification
         </Link>
+        <Link href="/apply" className="text-white font-semibold underline mt-6">
+          Apply to Join
+        </Link>
       </main>
     </section>
   );
