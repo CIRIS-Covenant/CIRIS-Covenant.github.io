@@ -1,0 +1,7 @@
+{
+    "name": "ciris-covenant",  // Replace with your Cloudflare Pages project name
+    "compatibility_date": "2025-04-24",  // Use your project's compatibility date
+    "assets": {
+        "directory": "./out"  // Points to your asset directory [[10]]
+    }
+}
