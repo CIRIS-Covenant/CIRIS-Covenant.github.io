@@ -12,8 +12,11 @@ export default function HomePage() {
         <Link href="/sections/main" className="text-white font-semibold underline mt-6">
           Read the full specification
         </Link>
+        <Link href="https://discord.gg/rUA7WYZF" target="_blank" rel="noopener noreferrer" className="text-white font-semibold underline mt-6">
+          Join our Discord
+        </Link>
         <Link href="/apply" className="text-white font-semibold underline mt-6">
-          Apply to Join
+          Apply for access to the private agent code
         </Link>
       </main>
     </section>
