@@ -34,7 +34,7 @@ export default function ApplyPage() {
 
   return (
     <div className="p-6 max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">Apply to Join CIRIS</h1>
+      <h1 className="text-3xl font-bold mb-4">Apply to access private agent code</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -80,7 +80,7 @@ export default function ApplyPage() {
 
         <textarea
           name="message"
-          placeholder="Why do you want to join?"
+          placeholder="How would you like to help?"
           required
           onChange={handleChange}
           value={formData.message}
