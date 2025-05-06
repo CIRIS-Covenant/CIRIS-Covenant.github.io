@@ -43,7 +43,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <img src="/logo.svg" alt="CIRIS.ai Logo" className="h-8 w-auto mr-2" />
-                <a href="/" className="text-xl font-semibold text-gray-700">CIRIS.ai&nbsp;L3C</a>
+                <Link href="/" className="text-xl font-semibold text-gray-700">CIRIS.ai&nbsp;L3C</Link>
               </div>
               <div className="flex items-center space-x-4">
                 <Link href="/" className="text-gray-700 hover:text-blue-500">Home</Link>
