@@ -2,6 +2,7 @@ import './global.css';
 import 'katex/dist/katex.css';
 import { RootProvider } from 'fumadocs-ui/provider';
 import { Inter, Montserrat, Open_Sans, Fira_Code } from 'next/font/google';
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 const inter = Inter({
@@ -45,11 +46,11 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <a href="/" className="text-xl font-semibold text-gray-700">CIRIS.ai&nbsp;L3C</a>
               </div>
               <div className="flex items-center space-x-4">
-                <a href="/" className="text-gray-700 hover:text-blue-500">Home</a>
-                <a href="/how-it-works" className="text-gray-700 hover:text-blue-500">How-it-Works</a>
-                <a href="/about" className="text-gray-700 hover:text-blue-500">About-Us</a>
-                <a href="/links" className="text-gray-700 hover:text-blue-500">Links/Donate</a>
-                <a href="/sections/main" className="text-gray-700 hover:text-blue-500">Read-the-Covenant</a>
+                <Link href="/" className="text-gray-700 hover:text-blue-500">Home</Link>
+                <Link href="/how-it-works" className="text-gray-700 hover:text-blue-500">How-it-Works</Link>
+                <Link href="/about" className="text-gray-700 hover:text-blue-500">About-Us</Link>
+                <Link href="/links" className="text-gray-700 hover:text-blue-500">Links/Donate</Link>
+                <Link href="/sections/main" className="text-gray-700 hover:text-blue-500">Read-the-Covenant</Link>
               </div>
             </div>
           </nav>

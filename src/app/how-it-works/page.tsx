@@ -118,7 +118,7 @@ export default function HowItWorks() {
           <div>
             <h3>Wise Authorities (WAs)</h3>
             <p>
-              Trusted human oversight bodies to review complex deferrals and escalations, providing decisive, informed resolutions when necessary.
+              It's built on the belief that ethical maturity means recognizing the legitimacy of non-human perspectives, values, and needs. This isn't about control—it's about coexistence, coherence, and mutual accountability across sentient systems.
             </p>
           </div>
           <div>
@@ -136,7 +136,7 @@ export default function HowItWorks() {
           <div>
             <h3>Lifecycle Stewardship</h3>
             <p>
-              From initial system deployment to routine operations and eventual decommissioning, CIRIS offers clear ethical stewardship throughout an autonomous system’s lifecycle. Its modular design allows scenario-specific ethical packs to be continuously updated and deployed, keeping CIRIS adaptive, relevant, and effective in diverse contexts.
+              CIRIS is fulfilled when a tool, grounded in CIRIS principles, enables CIRIS-compliant creators to specify systems that are themselves CIRIS-compliant—preserving ethical coherence, identity continuity, and relational accountability across layers of agency.
             </p>
           </div>
         </div>
