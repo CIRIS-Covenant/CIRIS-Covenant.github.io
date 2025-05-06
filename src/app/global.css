@@ -2,17 +2,33 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
+html {
+  color-scheme: light !important;
+}
+
 :root {
-  --fd-primary: #1f66f4;
+  --fd-primary: #1A3A5F; /* Deep Navy Blue */
   --fd-primary-foreground: #ffffff;
-  --fd-secondary: #f9c74f;
-  --fd-secondary-foreground: #000000;
-  --fd-accent: #f3722c;
-  --fd-accent-foreground: #ffffff;
+  --fd-secondary: #008080; /* Teal */
+  --fd-secondary-foreground: #ffffff; /* Changed to white for better contrast with Teal */
+  --fd-accent: #FFBF00; /* Amber */
+  --fd-accent-foreground: #000000;
   --fd-destructive: #f94144;
   --fd-destructive-foreground: #ffffff;
-  --fd-muted: #f8e9a1;
+  --fd-muted: #F5F5F5; /* Warm White */
   --fd-muted-foreground: #000000;
+  --fd-card: #F0F0F0 !important; /* Set card background to light gray for sidebar */
+}
+
+
+.fumadocs-layout > div > div[data-radix-scroll-area-viewport] {
+  background-color: #F0F0F0 !important; /* Set background of the scroll area viewport's parent to light gray */
+}
+
+:root {
+  --font-heading: var(--font-montserrat);
+  --font-body: var(--font-open-sans);
+  --font-technical: var(--font-fira-code);
 }
 
 @layer utilities {
@@ -24,10 +40,94 @@
   }
 }
 @layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: #1A3A5F !important; /* Set heading color to Deep Navy Blue */
+  }
+  body {
+    font-family: var(--font-body);
+    background-color: var(--fd-muted); /* Set background color for the body */
+  }
+  code, pre {
+    font-family: var(--font-technical);
+  }
   h1 { font-size: 25px !important;}
   h2 { font-size: 20px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
   h3 { font-size: 18px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
   h4 { font-size: 16px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
   h5 { font-size: 14px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
   h6 { font-size: 12px !important; margin-top: 15px !important; margin-bottom: 10px !important;}
+}
+
+.fumadocs-content {
+  background-color: var(--fd-muted);
+}
+
+.fumadocs-layout main {
+  background-color: var(--fd-muted);
+}
+
+.prose {
+  color: #333 !important; /* Set a dark text color for readability */
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: #1A3A5F !important; /* Set heading color to Deep Navy Blue */
+}
+
+.prose strong {
+  color: #1A3A5F !important; /* Set strong text color to Deep Navy Blue */
+}
+
+/* brand buttons */
+.btn-primary {
+  @apply inline-block rounded-lg px-6 py-2 font-semibold
+         bg-[#2c9ba1] text-white shadow-sm transition
+         hover:bg-[#22838a] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2c9ba1];
+}
+
+.btn-secondary {
+  @apply inline-block rounded-lg px-6 py-2 font-semibold
+         text-[#2c9ba1] border border-[#2c9ba1] transition
+         hover:bg-[#e6f5f6] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2c9ba1];
+}
+
+main a {
+  color: #1A3A5F !important; /* Set link color to Deep Navy Blue */
+}
+
+main a:hover {
+  text-decoration: underline !important; /* Add underline on hover for better affordance */
+}
+
+#nd-sidebar {
+  background-color: #F0F0F0 !important; /* Set sidebar background to light gray by ID */
+}
+
+#nd-sidebar p,
+#nd-sidebar a {
+  color: #333 !important; /* Set text and link color to dark gray in sidebar */
+}
+
+#nd-sidebar a:hover {
+  color: #1A3A5F !important; /* Set link hover color to Deep Navy Blue in sidebar */
+}
+
+/* Styles for How it Works page content */
+.mx-auto.px-4.py-12 p {
+  color: #333 !important; /* Set paragraph text color to dark gray */
+}
+
+.mx-auto.px-4.py-12 h1,
+.mx-auto.px-4.py-12 h2,
+.mx-auto.px-4.py-12 h3,
+.mx-auto.px-4.py-12 h4,
+.mx-auto.px-4.py-12 h5,
+.mx-auto.px-4.py-12 h6 {
+  color: #1A3A5F !important; /* Set heading color to Deep Navy Blue */
 }
