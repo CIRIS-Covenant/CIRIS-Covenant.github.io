@@ -4,6 +4,7 @@ import { RootProvider } from 'fumadocs-ui/provider';
 import { Inter, Montserrat, Open_Sans, Fira_Code } from 'next/font/google';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -42,7 +43,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <nav className="container mx-auto px-6 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <img src="/logo.svg" alt="CIRIS.ai Logo" className="h-8 w-auto mr-2" />
+                <Image src="/logo.svg" alt="CIRIS.ai Logo" width={32} height={32} className="h-8 w-auto mr-2" />
                 <Link href="/" className="text-xl font-semibold text-gray-700">CIRIS.ai&nbsp;L3C</Link>
               </div>
               <div className="flex items-center space-x-4">
