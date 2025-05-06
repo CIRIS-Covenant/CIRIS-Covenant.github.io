@@ -43,7 +43,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <nav className="container mx-auto px-6 py-3">
             <div className="flex flex-col md:flex-row items-center md:justify-between space-y-2 md:space-y-0">
               <div className="flex items-center">
-                <img src="/logo.svg" alt="CIRIS.ai Logo" className="h-8 w-auto mr-2" />
+                <Image src="/logo.svg" alt="CIRIS.ai Logo" width={32} height={32} className="h-8 w-auto mr-2" />
                 <Link href="/" className="text-xl font-semibold text-gray-700">CIRIS.ai&nbsp;L3C</Link>
               </div>
               <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">

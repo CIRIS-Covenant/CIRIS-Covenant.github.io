@@ -2,10 +2,6 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
-html {
-  color-scheme: light !important;
-}
-
 :root {
   --fd-primary: #1A3A5F; /* Deep Navy Blue */
   --fd-primary-foreground: #ffffff;
@@ -156,4 +152,23 @@ main a:hover {
 .mx-auto.px-4.py-12 h5,
 .mx-auto.px-4.py-12 h6 {
   color: #1A3A5F !important; /* Set heading color to Deep Navy Blue */
+}
+
+.white-background {
+  background-color: white;
+}
+
+#nd-subnav {
+  background-color: white !important;
+}
+
+#nd-tocnav {
+  background-color: white !important;
+}
+
+#nd-subnav a,
+#nd-subnav span,
+#nd-tocnav a,
+#nd-tocnav span {
+  color: #333 !important;
 }

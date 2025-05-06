@@ -11,7 +11,7 @@ import Image from 'next/image';
 export const baseOptions: BaseLayoutProps = {
   nav: {
     title: (
-      <>
+      <span style={{ backgroundColor: 'white' }}>
         <Image
           src="/cirisImg.jpg"
           alt="CIRIS Logo"
@@ -20,7 +20,7 @@ export const baseOptions: BaseLayoutProps = {
           className="rounded-full" // Optional: Keep the circular shape if desired
         />
         CIRIS
-      </>
+      </span>
     ),
     url: '/sections/main', // Set the link URL here
   },
