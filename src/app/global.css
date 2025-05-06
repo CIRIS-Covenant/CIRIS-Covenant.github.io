@@ -80,6 +80,15 @@ html {
   color: #1A3A5F !important; /* Set heading color to Deep Navy Blue */
 }
 
+@media (max-width: 768px) {
+  .flex.items-center.space-x-4 {
+    flex-direction: column;
+    space-x: 0; /* Remove horizontal space */
+    gap: 0.5rem; /* Add vertical space */
+    align-items: flex-start; /* Align links to the start */
+  }
+}
+
 .prose strong {
   color: #1A3A5F !important; /* Set strong text color to Deep Navy Blue */
 }
@@ -116,6 +125,23 @@ main a:hover {
 
 #nd-sidebar a:hover {
   color: #1A3A5F !important; /* Set link hover color to Deep Navy Blue in sidebar */
+}
+
+/* Styles for TOC dropdown */
+.fumadocs-toc-popover,
+.fumadocs-toc-content {
+  background-color: var(--fd-muted) !important; /* Set background to off-white */
+}
+
+/* Target links within TOC dropdown, specifically those with text-fd-muted-foreground */
+.fumadocs-toc-popover a.text-fd-muted-foreground,
+.fumadocs-toc-content a.text-fd-muted-foreground {
+  color: #1A3A5F !important; /* Set link color to Deep Navy Blue */
+}
+
+.fumadocs-toc-popover a.text-fd-muted-foreground:hover,
+.fumadocs-toc-content a.text-fd-muted-foreground:hover {
+  color: #008080 !important; /* Set link hover color to Teal */
 }
 
 /* Styles for How it Works page content */
