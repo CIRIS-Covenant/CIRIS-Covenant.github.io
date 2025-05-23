@@ -1,4 +1,5 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+import Image from 'next/image';
 
 /**
  * Shared layout configurations
@@ -10,8 +11,8 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 export const baseOptions: BaseLayoutProps = {
   nav: {
     title: (
-      <>
-        <img
+      <span style={{ backgroundColor: 'white' }}>
+        <Image
           src="/cirisImg.jpg"
           alt="CIRIS Logo"
           width={24}
@@ -19,7 +20,7 @@ export const baseOptions: BaseLayoutProps = {
           className="rounded-full" // Optional: Keep the circular shape if desired
         />
         CIRIS
-      </>
+      </span>
     ),
     url: '/sections/main', // Set the link URL here
   },

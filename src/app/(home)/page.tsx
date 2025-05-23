@@ -1,24 +1,22 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
-    <section className="bg-[#081523] min-h-screen flex">
-      <main className="flex flex-1 flex-col justify-center text-center max-w-2xl mx-auto px-4">
-        <img src="/cirisImg.jpg" alt="Ciris Image" className="max-w-sm mx-auto mb-8" />
-        <h1 className="text-3xl font-bold text-white">The CIRIS Covenant</h1>
-        <p className="text-gray-400 mt-6">
-          CIRIS 1.0-β is a provisional, work-in-progress specification. Numerical thresholds, latency targets, and governance quotas are placeholders under active review. Do not build safety-critical systems that rely solely on this draft.
+    <section className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 text-center">
+        <Image src="/logo.svg" alt="CIRIS.ai Logo" width={200} height={200} className="mx-auto h-50 w-auto" />
+        <h1 className="text-3xl font-extrabold text-gray-900">
+          Ethics at the Core, Not the Periphery
+        </h1>
+        <p className="mt-2 text-sm text-gray-600">
+          CIRIS.ai balances autonomous AI decision-making with meaningful human oversight, delivering resilient, transparent ethical intelligence for critical systems.
         </p>
-        <Link href="/sections/main" className="text-white font-semibold underline mt-6">
-          Read the full specification
-        </Link>
-        <Link href="https://discord.gg/rUA7WYZF" target="_blank" rel="noopener noreferrer" className="text-white font-semibold underline mt-6">
-          Join our Discord
-        </Link>
-        <Link href="/apply" className="text-white font-semibold underline mt-6">
-          Apply for access to the private agent code
-        </Link>
-      </main>
+        <div className="flex flex-col sm:flex-row justify-center gap-3">
+          <Link href="/sections/main" className="btn-primary">Read the Covenant</Link>
+          <Link href="/how-it-works"  className="btn-secondary">See&thinsp;How&thinsp;it&thinsp;Works</Link>
+        </div>
+      </div>
     </section>
   );
 }
